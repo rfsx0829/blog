@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="0xbz7sb7">
+
+
+    <meta name="subtitle" content="欢迎交流学习">
+
+
+
+
+<title>Gopher China 2019 总结 | 0xbz7sb7</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">0xbz7sb7&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">0xbz7sb7&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Gopher China 2019 总结</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">0xbz7sb7</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">April 30, 2019&nbsp;&nbsp;23:27:55</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Golang/">Golang</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="Gopher-China-2019-总结"><a href="#Gopher-China-2019-总结" class="headerlink" title="Gopher China 2019 总结"></a>Gopher China 2019 总结</h1><h2 id="会前"><a href="#会前" class="headerlink" title="会前"></a>会前</h2><p>早早就报了名，真正开始，也依然避免不了心有悸动</p>
+<p>从学校出发去北京，在北京租了一间屋子，五个人住，屋子还挺前卫</p>
+<h2 id="第一天"><a href="#第一天" class="headerlink" title="第一天"></a>第一天</h2><p>虽然我们都早起，但是因为北京的早高峰，我们挤地铁还是花费了很多时间，到达目的地时大会已经快开始，只得草草签到并去一些展台看了看，简单领了些小礼物</p>
+<a id="more"></a>
+
+<h3 id="大型微服务框架设计"><a href="#大型微服务框架设计" class="headerlink" title="大型微服务框架设计"></a>大型微服务框架设计</h3><p>第一场就这么强力，直接大谈设计，不得不说，我听懂的部分不算多</p>
+<p>涉及了很多 大型框架 所需要注意的问题和解决思路，为需要自己开发大型框架的团队或公司提供了非常宝贵的建议，但因为我个人并不需要开发大型的微服务框架，所以也不是很感冒，但依然学到了很多。</p>
+<h3 id="Grab-路径规划引擎-和-ETA"><a href="#Grab-路径规划引擎-和-ETA" class="headerlink" title="Grab 路径规划引擎 和 ETA"></a>Grab 路径规划引擎 和 ETA</h3><p>Grab 是一个主要服务于东南亚的打车公司，不得不说，这一个我很有印象，因为他们确实很强，但其实主要的内容都是算法，从所讲的 毛细地图补全，定位修复 到 路径规划 到 ETA(Estimated Time of Arrival)，无一不是跟算法息息相关，以及智能动态寻路和路径偏好选择，全是算法。跟 Go 的关系呢，就在于用 Go 实现这些功能的话，效率比较高，而且可以微服务化，高度并发</p>
+<h3 id="TiDB"><a href="#TiDB" class="headerlink" title="TiDB"></a>TiDB</h3><p>TiDB 在之前我仅仅只是听过这个数据库，一直没有详细地去了解和体验。听过讲解之后觉得其实还挺不错。</p>
+<p>他们所讲的内容挺丰富的，不仅有数据处理相关的内容，比如怎么提高 Query 效率，怎么高效储存等。还有一个新的小工具，FailPoint，应该是 gofail 的改良，看起来挺厉害的，值得一试</p>
+<h3 id="Testing-how-what-why"><a href="#Testing-how-what-why" class="headerlink" title="Testing; how, what, why"></a>Testing; how, what, why</h3><p>这一场真的是非常厉害，是一位 Go 源码开发者所分享，我没资格评价，但强推，自行看 PPT</p>
+<h3 id="Context-amp-Error"><a href="#Context-amp-Error" class="headerlink" title="Context &amp; Error"></a>Context &amp; Error</h3><p>这场很好理解，其实就讲了在业务开发中 Context 和 Error 应该怎么处理比较合理，挺不错的</p>
+<h3 id="Mutex"><a href="#Mutex" class="headerlink" title="Mutex"></a>Mutex</h3><p>这场也是大佬讲的，主要是讲解同步的方法和原理，各种锁，非常详细！个人强烈推荐深入研究</p>
+<p><a href="https://colobu.com/" target="_blank" rel="noopener">大佬的博客</a> 也是藏宝地，值得探索</p>
+<h3 id="百度-APP"><a href="#百度-APP" class="headerlink" title="百度 APP"></a>百度 APP</h3><p>这个，跟前面几个相比，就显得很不充实了，没多少干货，但 PPT 还是可以一看吧</p>
+<h3 id="Real-Time-SaaS"><a href="#Real-Time-SaaS" class="headerlink" title="Real-Time SaaS"></a>Real-Time SaaS</h3><p>这是一个做在线教育的公司的开发者来讲的，主要涉及的技术就是 WebRTC， 其他都没啥</p>
+<h2 id="晚宴"><a href="#晚宴" class="headerlink" title="晚宴"></a>晚宴</h2><p>不得不说，我们团队太强了，一共一百个名额的晚宴，我们五个人居然都成功拿到入场资格。。</p>
+<p>总觉得晚宴才是整个大会的精华部分，不仅晚餐精致丰富不限量。而且还有各种大佬分享各方面的坑和经验。而且都是如此近距离的观察和聆听嗷，很多公司很多大佬居然就坐在旁边桌吃饭，这是怎样一种体验，以我的话来说，就是我这辈子没这么酷过</p>
+<h2 id="第二天"><a href="#第二天" class="headerlink" title="第二天"></a>第二天</h2><p>有了第一天的经验，第二天就不是那么拘谨了，轻车熟路的到达会场，开始听又一批大佬讲座</p>
+<h3 id="MinIO-对象储存"><a href="#MinIO-对象储存" class="headerlink" title="MinIO 对象储存"></a>MinIO 对象储存</h3><p>总体就是讲 MinIO 的各种优势，推荐使用</p>
+<h2 id="干货PPT"><a href="#干货PPT" class="headerlink" title="干货PPT"></a>干货PPT</h2><p><a href="https://www.yuque.com/techcats/imxk6x" target="_blank" rel="noopener">查看PPT列表</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>0xbz7sb7</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%B0%8F%E7%BB%93/"># 小结</a>
+                    
+                        <a href="/tags/Golang/"># Golang</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/513/">当今世界计算机硬件与软件发展现状</a>
+            
+            
+            <a class="next" rel="next" href="/2019/4211/">读书句子收集</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="jinrishici-container">
+        <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        <span id="poem-sentence">正在加载今日诗词....</span><span id="poem-info"></span>
+        <script type="text/javascript">
+        jinrishici.load(function(result) {
+            // console.log(result)
+            var sentence = document.querySelector("#poem-sentence")
+            var info = document.querySelector("#poem-info")
+            sentence.innerHTML = result.data.content
+            info.innerHTML = " -- " + result.data.origin.author + " 《" + result.data.origin.title + "》"
+        })
+        </script>
+    </div>
+    <div class="copyright">
+        <span>© 2020 0xbz7sb7 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | <a href="https://www.jinrishici.com/" target="_blank">今日诗词</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

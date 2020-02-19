@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="0xbz7sb7">
+
+
+    <meta name="subtitle" content="欢迎交流学习">
+
+
+
+
+<title>初探 Kubernetes（一） | 0xbz7sb7</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">0xbz7sb7&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">0xbz7sb7&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">初探 Kubernetes（一）</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">0xbz7sb7</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 31, 2019&nbsp;&nbsp;13:17:34</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Kubernetes/">Kubernetes</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="记录初探-Kubernetes-的过程"><a href="#记录初探-Kubernetes-的过程" class="headerlink" title="记录初探 Kubernetes 的过程"></a>记录初探 Kubernetes 的过程</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>一直有想学习 Kubernetes ，最近看了些书，也自己用了用，也遇到了一些小问题，值得写篇博客记录一下</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>由于笔者仅是自学如何使用 Kubernetes，仅是单机版，还未到部署到生产环境的时候，且使用的是 Mac 电脑，故选择使用 Minikube</p>
+<p>要安装使用 Minikube ，需要先安装 VirtualBox ，以下是一些过程</p>
+<a id="more"></a>
+
+<h3 id="VirtualBox"><a href="#VirtualBox" class="headerlink" title="VirtualBox"></a>VirtualBox</h3><p><a href="https://www.virtualbox.org" target="_blank" rel="noopener">VirtualBox官网</a> 提供了下载，或者可以到 <a href="https://mirrors.tuna.tsinghua.edu.cn/virtualbox/" target="_blank" rel="noopener">清华大学开源软件镜像站</a> 下载</p>
+<p>下载完成之后，打开安装包安装即可</p>
+<h3 id="Minikube"><a href="#Minikube" class="headerlink" title="Minikube"></a>Minikube</h3><p><a href="https://github.com/kubernetes/minikube" target="_blank" rel="noopener">Minikube</a> 是 Minikube 在 Github 中的项目地址，可以在 Release 标签中找到最新版本下载</p>
+<blockquote>
+<p>$ cd ~/Downloads<br>$ chmod +x ./minikube<br>$ mv ./minikube /usr/local/bin/minikube</p>
+</blockquote>
+<p>这里是给下载的 minikube 加上执行权限后放到 /usr/local/bin 里面，也可以自己选择放在任意 PATH 里</p>
+<p>然后运行测试一下是否安装完成</p>
+<blockquote>
+<p>$ minikube version<br>minikube version: v1.0.0</p>
+</blockquote>
+<p>正确显示出 minikube 的版本，安装成功！</p>
+<h3 id="Kubectl"><a href="#Kubectl" class="headerlink" title="Kubectl"></a>Kubectl</h3><p>Kubectl 是用于控制 Kubernetes 的，可通过包管理程序安装(Mac 用 brew ，Centos 用 yum，Ubuntu 用 apt)</p>
+<blockquote>
+<p>$ brew install kubernetes-cli<br>$ kubectl<br>kubectl controls the Kubernetes cluster manager.</p>
+<p>Find more information at: <a href="https://kubernetes.io/docs/reference/kubectl/overview/" target="_blank" rel="noopener">https://kubernetes.io/docs/reference/kubectl/overview/</a><br>…</p>
+</blockquote>
+<p>安装成功，接下来可以准备启动了</p>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><blockquote>
+<p>$ minikube start<br>😄  minikube v1.0.0 on darwin (amd64)<br>🤹  Downloading Kubernetes v1.14.0 images in the background …<br>💡  Tip: Use ‘minikube start -p <name>‘ to create a new cluster, or ‘minikube delete’ to delete this one.<br>🏃  Re-using the currently running virtualbox VM for “minikube” …<br>⌛  Waiting for SSH access …<br>📶  “minikube” IP address is 192.168.99.104<br>🐳  Configuring Docker as the container runtime …<br>🐳  Version of container runtime is 18.06.2-ce<br>⌛  Waiting for image downloads to complete …<br>✨  Preparing Kubernetes environment …<br>🚜  Pulling images required by Kubernetes v1.14.0 …<br>🔄  Relaunching Kubernetes v1.14.0 using kubeadm …<br>⌛  Waiting for pods: apiserver proxy etcd scheduler controller dns<br>📯  Updating kube-proxy configuration …<br>🤔  Verifying component health …..<br>💗  kubectl is now configured to use “minikube”<br>🏄  Done! Thank you for using minikube!</p>
+<p>$ kubectl get nodes</p>
+</blockquote>
+<p><img src="/pics/1554018821347-c95d911f-88cb-4a73-b226-c425a84932e8.png" alt="kubectl get pods"></p>
+<p>可以看到， minikube 启动成功之后，用 <code>kubectl get nodes</code> 可以成功获取到 nodes 的信息，一切正常！</p>
+<h2 id="写一个小服务，尝试部署"><a href="#写一个小服务，尝试部署" class="headerlink" title="写一个小服务，尝试部署"></a>写一个小服务，尝试部署</h2><h3 id="Hello-World-代码"><a href="#Hello-World-代码" class="headerlink" title="Hello World 代码"></a>Hello World 代码</h3><p>此处采用Go语言，因为可以静态编译且语法简单</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.go</span></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"net/http"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	http.HandleFunc(<span class="string">"/"</span>, handler)</span><br><span class="line">	fmt.Println(<span class="string">"Listening on http://localhost:8080/"</span>)</span><br><span class="line">	http.ListenAndServe(<span class="string">":8080"</span>, <span class="literal">nil</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">handler</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	w.WriteHeader(http.StatusOK)</span><br><span class="line">	w.Write([]<span class="keyword">byte</span>(<span class="string">"Hello World"</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>$ go run main.go<br>Listening on <a href="http://localhost:8080/" target="_blank" rel="noopener">http://localhost:8080/</a></p>
+</blockquote>
+<p>用浏览器打开上面的网址可以看到</p>
+<p><img src="/pics/1554013868546-bc0e4859-0672-4173-9b5b-99326c52373d.png" alt="浏览器访问"></p>
+<p>成功输出了 Hello World</p>
+<p>下一步</p>
+<h3 id="静态编译"><a href="#静态编译" class="headerlink" title="静态编译"></a>静态编译</h3><p>可能有人会问会什么要静态编译，不能直接 <code>go run main.go</code> 吗</p>
+<p>如果用 <code>go run main.go</code> 来启动服务，那么还需要 Go 语言的开发环境，如果代码复杂一点还需要安装各种依赖库，会导致镜像过于庞大，因为这只是一个很小很简单的 Demo ，仅作测试的小玩具，静态编译出的可执行文件最大不到 10MB ，而为了不编译直接运行所需要的开发环境，至少都是 几百MB ，没有必要为了一个小 Demo 去浪费那么多资源，所以选择静态编译</p>
+<blockquote>
+<p>$ GOOS=linux CGO_ENABLED=0 go build -o main -ldflags ‘-extldflags “-static”‘ main.go</p>
+</blockquote>
+<p>执行这条命令后可以看到当前目录下多了一个名为 main 的可执行文件</p>
+<p>但是不能执行，因为当前是 MacOS 环境，而静态编译时指定的是 Linux 环境</p>
+<p>ps: 如果读者是 Linux 环境当我没说</p>
+<p>ps: 如果有读者看不懂这条命令，没关系不要怕，你不是不懂 Golang ，你只是不懂 C 而已</p>
+<h3 id="构建-Docker-镜像"><a href="#构建-Docker-镜像" class="headerlink" title="构建 Docker 镜像"></a>构建 Docker 镜像</h3><p>要构建 Docker 镜像，我们先写一个 dockerfile</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> scratch</span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> ./main /main</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [ <span class="string">"/main"</span> ]</span></span><br></pre></td></tr></table></figure>
+
+<p>ps: scratch 是一个空的 Docker 镜像，即不使用基础镜像的意思</p>
+<p>写好 Dockerfile 后，在执行命令构建镜像之前，要确保minikube已经启动，并且执行一句神奇的命令先</p>
+<blockquote>
+<p>$ eval $(minikube docker-env)</p>
+</blockquote>
+<p>在这条命令里藏着我半天的心酸，下一篇文章会仔细解释，这里先不作解释</p>
+<p>再执行下面这些</p>
+<blockquote>
+<p>$ docker build -t hello:v1.0 .<br>Sending build context to Docker daemon  11.73MB<br>Step 1/3 : FROM scratch<br>—&gt;<br>Step 2/3 : ADD ./main /main<br>—&gt; 636350b5d281<br>Step 3/3 : CMD [ “/main” ]<br>—&gt; Running in a54d3c9c3864<br>Removing intermediate container a54d3c9c3864<br>—&gt; 321b69c05fff<br>Successfully built 321b69c05fff<br>Successfully tagged hello:v1.0<br>$ docker images</p>
+</blockquote>
+<p><img src="/pics/1554018896187-c9afeaca-2042-42c8-aaf0-7ad775eb1c33.png" alt="docker images"></p>
+<p>可以看到，成功地构建了镜像，笔者这里镜像大小仅仅只有 7.34MB</p>
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><p>部署分为两个步骤</p>
+<h4 id="创建-Deployments-和-Pods"><a href="#创建-Deployments-和-Pods" class="headerlink" title="创建 Deployments 和 Pods"></a>创建 Deployments 和 Pods</h4><blockquote>
+<p>$ kubectl run hello –image=hello:v1.0 –port=8080<br>deployment.apps “hello” created<br>$ kubectl get deployments</p>
+</blockquote>
+<p><img src="/pics/1554018939941-8516aaf8-b734-40ba-9e1c-4e1d66699988.png" alt="kubectl get deployments"></p>
+<blockquote>
+<p>$ kubectl get pods</p>
+</blockquote>
+<p><img src="/pics/1554018967294-676d6ced-c2aa-4e43-8005-414c1e165a13.png" alt="kubectl get pods"></p>
+<p>可以看到，Pods 已经准备好了</p>
+<h4 id="创建-Service-以供外部访问"><a href="#创建-Service-以供外部访问" class="headerlink" title="创建 Service 以供外部访问"></a>创建 Service 以供外部访问</h4><blockquote>
+<p>$ kubectl expose deployment hello –port=8080 –type=NodePort<br>service “hello” exposed<br>$ kubectl get services</p>
+</blockquote>
+<p><img src="/pics/1554018998759-1009c3b7-d614-4b01-85fe-6a23fe758bdc.png" alt="kubectl get services"></p>
+<p>可以看到，service 已经创建成功，执行以下命令来查看 service 的 ip 和端口</p>
+<p>ps: ip和端口以自己执行命令后输出的为准</p>
+<blockquote>
+<p>$ minikube service hello –url<br><a href="http://192.168.99.104:31537" target="_blank" rel="noopener">http://192.168.99.104:31537</a><br>$ curl <a href="http://192.168.99.104:31537" target="_blank" rel="noopener">http://192.168.99.104:31537</a><br>Hello World</p>
+</blockquote>
+<p><img src="/pics/1554017653231-56204059-016c-485a-bd07-7c6d3e6ce782.png" alt="浏览器访问"></p>
+<p>使用浏览器打开，可以看到输出 Hello World，部署一切正常！</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>在部署的过程中其实遇到了很多困难，我会在接下来的一篇文章中详细说明，如果有遇到相同困难的朋友可以参考参考</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>0xbz7sb7</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Kubernetes/"># Kubernetes</a>
+                    
+                        <a href="/tags/%E6%96%B0%E5%BC%80%E5%A7%8B/"># 新开始</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/3311/">初探 Kubernetes（二）</a>
+            
+            
+            <a class="next" rel="next" href="/2019/323/">我的第一篇博客</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="jinrishici-container">
+        <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        <span id="poem-sentence">正在加载今日诗词....</span><span id="poem-info"></span>
+        <script type="text/javascript">
+        jinrishici.load(function(result) {
+            // console.log(result)
+            var sentence = document.querySelector("#poem-sentence")
+            var info = document.querySelector("#poem-info")
+            sentence.innerHTML = result.data.content
+            info.innerHTML = " -- " + result.data.origin.author + " 《" + result.data.origin.title + "》"
+        })
+        </script>
+    </div>
+    <div class="copyright">
+        <span>© 2020 0xbz7sb7 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | <a href="https://www.jinrishici.com/" target="_blank">今日诗词</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

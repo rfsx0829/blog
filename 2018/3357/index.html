@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="0xbz7sb7">
+
+
+    <meta name="subtitle" content="欢迎交流学习">
+
+
+
+
+<title>C语言指针声明小结 | 0xbz7sb7</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">0xbz7sb7&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">0xbz7sb7&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">C语言指针声明小结</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">0xbz7sb7</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">July 3, 2018&nbsp;&nbsp;20:19:46</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/C/">C</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>博客开了这么久，都没写什么技术性的文章，恰好最近在看C语言相关的东西，学会一些关于指针声明的小技巧，记录一下。<br>言传我也不太说话，直接意会吧</p>
+<h4 id="变量指针"><a href="#变量指针" class="headerlink" title="变量指针"></a>变量指针</h4><blockquote>
+<p><strong>int *p = NULL;&nbsp;&nbsp;//&nbsp;指向 <em>整形变量</em> 的指针</strong><br><strong>int **p = NULL;&nbsp;&nbsp;//&nbsp;指向 <em>整形指针变量</em> 的指针</strong></p>
+</blockquote>
+<h4 id="常量指针，常指针"><a href="#常量指针，常指针" class="headerlink" title="常量指针，常指针"></a>常量指针，常指针</h4><blockquote>
+<p><strong>const int *p = NULL;&nbsp;&nbsp;//&nbsp;指向 <em>整形常量</em> 的指针</strong><br><strong>int *const p = NULL;&nbsp;&nbsp;//&nbsp;指向 <em>整形</em> 的常指针</strong><br><strong>const int *const p = NULL;&nbsp;&nbsp;//&nbsp;指向 <em>整形常量</em> 的常指针</strong></p>
+</blockquote>
+<h4 id="数组指针，指针数组"><a href="#数组指针，指针数组" class="headerlink" title="数组指针，指针数组"></a>数组指针，指针数组</h4><blockquote>
+<p><strong>int *p[4] = {NULL};&nbsp;&nbsp;//&nbsp;大小为4的数组，每个元素都是指向整形变量的指针</strong><br><strong>int (*p)[4] = NULL;&nbsp;&nbsp;//&nbsp;指向 <em>一个大小为4的整形数组</em> 的指针，自增时每次加4 * sizeof(int)</strong><br><strong>int *(*p)[4] = NULL;&nbsp;&nbsp;//&nbsp;指向 <em>一个大小为4的指针数组</em> ，该数组的每一个元素都是指向整形变量的指针</strong><br><strong>int *p[3][4] = {NULL};&nbsp;&nbsp;//&nbsp;3 * 4的二维数组，每一个元素都是指向整形变量的指针</strong><br><strong>int (*p)[3][4] = NULL;&nbsp;&nbsp;//&nbsp;指向 <em>大小为3 \</em> 4的二维整形数组* 的指针，自增时每次加3 * 4 * sizeof(int)</strong><br><strong>int *(*p)[3][4] = NULL;&nbsp;&nbsp;//&nbsp;指向 <em>大小为3 \</em> 4的二维整形指针数组* 的指针，该数组每一个元素都是指向整形变量的指针</strong><br><strong>int (*(*p)[3])[4] = NULL;&nbsp;&nbsp;//&nbsp;指向一个指针，这个指针又指向一个大小为3的指针数组，数组的每一个元素指向一个大小为4的整形数组</strong><br><strong>int *(*(*p)[3])[4] = NULL;&nbsp;&nbsp;//&nbsp;指向一个指针，这个指针又指向一个大小为3的指针数组，数组的每一个元素指向一个大小为4的整形指针数组</strong></p>
+</blockquote>
+<h4 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h4><blockquote>
+<p><strong>int *p(int) = NULL;&nbsp;&nbsp;//&nbsp;有一个整形形参，返回值为整形指针的函数</strong><br><strong>int (*p)(int) = NULL;&nbsp;&nbsp;//&nbsp;指向 <em>有一个整形形参，返回值为整形变量的函数</em> 的函数指针</strong><br><strong>int *(*p)(int) = NULL;&nbsp;&nbsp;//&nbsp;指向 <em>有一个整形形参，返回值为整形指针的函数</em> 的函数指针</strong><br><strong>int *(*p)(int*) = NULL;&nbsp;&nbsp;//&nbsp;指向 <em>有一个整形指针参数，返回值是整形指针的函数</em> 的函数指针</strong><br><strong>int *(*p)(int, int*) = NULL;&nbsp;&nbsp;//&nbsp;指向 <em>有一个整形参数，一个整形指针参数，返回值是整形指针的函数</em> 的函数指针</strong></p>
+</blockquote>
+<h4 id="混合"><a href="#混合" class="headerlink" title="混合"></a>混合</h4><blockquote>
+<p><strong>int *(*(*(*p)(int*))[3])(int*[ ], int*) = NULL;&nbsp;&nbsp;//&nbsp;P是一个函数指针，指向一个有一个整形指针参数的函数，这个函数的返回值是指向数组的指针，数组的每一个元素也是一个函数指针，指向一个 返回值为整形指针，参数为一个整形指针数组和一个整形指针 的函数</strong></p>
+</blockquote>
+<br>
+#### 分析
+稍微有点乱，但是，不难发现其中的规律。
+
+<p><strong>*p表示一个指针，但是 * 符号的优先级没有( )和[ ]高。所以 int *p[ ] 和 int (*p)[ ] 就有一些区别了，一个是 指针数组，一个是数组指针</strong><br><br><br><strong>int *p[ ];&nbsp;&nbsp;[ ]优先级比*高，所以p是数组，那么把p[]用手遮住，剩下的就是数组的类型了，也就是int*，整形指针类型。</strong><br><br><br><strong>int (*p)[ ];&nbsp;&nbsp;*p被括号括起来了，优先级最高，所以p是指针，用手把*p遮住，剩下的就是指针所指向的类型了，也就是int [ ]，整形数组类型。</strong><br><br><br>那么，同样的方法，可以分析一下其他的声明。如<strong>int *p(int);和int (*p)(int);</strong><br><br><br><strong>int *p(int); &nbsp;乍一看像一个指针，但是这是一个函数声明，( )优先级比*高，所以p是一个函数，所以把p(int)遮住，剩下int*，所以p是一个参数为整形，返回值为整形指针的函数。</strong><br><br><br><strong>int (*p)(int); &nbsp;这个就是一个指针声明了，p是指针，遮住(*p)，剩下int &nbsp; (int)，所以p指向 &nbsp; 一个参数为整形，返回值为整形&nbsp; 的函数。</strong><br><br><br><br><del>方法就是这么个方法，其他分析自己多思考吧。</del></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>0xbz7sb7</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/C/"># C</a>
+                    
+                        <a href="/tags/Summary/"># Summary</a>
+                    
+                        <a href="/tags/Programming/"># Programming</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/24479/">简单读写进程内存</a>
+            
+            
+            <a class="next" rel="next" href="/2018/43234/">基于Hexo+GitHub搭建个人博客教程</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="jinrishici-container">
+        <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        <span id="poem-sentence">正在加载今日诗词....</span><span id="poem-info"></span>
+        <script type="text/javascript">
+        jinrishici.load(function(result) {
+            // console.log(result)
+            var sentence = document.querySelector("#poem-sentence")
+            var info = document.querySelector("#poem-info")
+            sentence.innerHTML = result.data.content
+            info.innerHTML = " -- " + result.data.origin.author + " 《" + result.data.origin.title + "》"
+        })
+        </script>
+    </div>
+    <div class="copyright">
+        <span>© 2020 0xbz7sb7 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | <a href="https://www.jinrishici.com/" target="_blank">今日诗词</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

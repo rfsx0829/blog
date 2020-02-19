@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="0xbz7sb7">
+
+
+    <meta name="subtitle" content="欢迎交流学习">
+
+
+
+
+<title>简单读写进程内存 | 0xbz7sb7</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">0xbz7sb7&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">0xbz7sb7&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">简单读写进程内存</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">0xbz7sb7</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">July 9, 2018&nbsp;&nbsp;22:35:46</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/C/">C++</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>为什么会有这样一篇博客呢，读写进程内存，<del>谁没事了干这种事情啊</del>。这个呢，还得从我最早接触编程说起。</p>
+<p>以前，我还是个网瘾青年，喜欢玩地下城与勇士这款网络游戏，无奈自己又没有人民币，装备又不好，玩起来特别没劲。偶然一次接触到了一个开外挂的人，带我，然后介绍给我一些免费外挂。于是我就接触到了外挂这种东西，发现地下城与勇士这款游戏的许多外挂都是由一个叫做易语言的编程语言写出来的，于是，我接触到了易语言，刚接触什么都不会，只会抄袭别人的外挂源码(抄袭可耻)。把进程名换成其他进程的名字，就能够修改其他进程的数据，然后地址栏，修改成不同的地址，就能修改不同地址的数据，当时觉得特别神奇，好奇心害死猫，于是我开始学习编程，最开始还是在学习易语言，因为它是全中文编程。而且可以很简单的做出一个窗口，按钮等等，而不是刚接触C语言时的一堆黑框，创建窗口还要先注册窗口类，实例化窗口，显示窗口什么的。。。</p>
+<p>用易语言写一个外挂可太简单了，可当我正规的读到了大学，进入了计算机系，正规的学习了其他编程语言后。才知道其实易语言是封装的C++语言，易语言能够实现的，C++都可以实现，<del>确切的来说，C++是万能的</del>。</p>
+<p>记得当时最有印象的几个函数名字是，十六到十，写内存整数型，写内存字节集等等，其实就是简单的把内存地址十六进制转成十进制，修改内存数据什么的，或者还有键盘监视和hook之类的就不谈了，这又是一个大话题。</p>
+<p>读写进程内存在易语言中很好实现，几个文字，写参数就行了，其实在C++中也并不复杂，只要有相应的API就行了，于是在MSDN查询到了两个API，<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms680553(v=vs.85).aspx" target="_blank" rel="noopener">ReadProcessMemory</a> 和 <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms681674(v=vs.85).aspx" target="_blank" rel="noopener">WriteProcessMemory</a> ，可以点击进入MSDN看详细的解释。这里只作简单介绍<br><img src="/pics/11850278-d413a93f0f9c3bf5.png" alt="ReadProcessMemory函数原型"><br><img src="/pics/11850278-044f92cc83d2e3c4.png" alt="WriteProcessMemory函数原型"><br>可以看到，这两个函数很相似，都接受五个参数，</p>
+<ol>
+<li>读取（写入）数据的进程句柄</li>
+<li>要读取（写入）的地址</li>
+<li>读取到（用作写入）的数据的存放指针</li>
+<li>希望读取（写入）的大小</li>
+<li>实际读取（写入）的大小的存放指针</li>
+</ol>
+<p>返回值：执行成功时，返回非0值，出错了返回0</p>
+<p>进程句柄需要通过<code>OpenProcess</code>函数或者<code>CreateProcess</code>函数返回，这里时读取（写入）其他进程而非子进程，使用<code>OpenProcess</code>，我先写一个小程序来做<strong>被修改</strong>程序。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	int count &#x3D; 10, num &#x3D; 0;</span><br><span class="line">	while(count--)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;count &#x3D; %d, num &#x3D; %d\nInput a number to update num\n&quot;, count, num);</span><br><span class="line">		scanf(&quot;%d&quot;, &amp;num);</span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;count &lt; 0, Process end, press enter to close console\n&quot;);</span><br><span class="line">	getchar();</span><br><span class="line">	getchar();</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译运行后<img src="/pics/11850278-c47dda9ad327a2b3.png" alt=""><br>很清楚的显示了每个变量的值，方便我们去检验后面读取到的值是否正确或者是否成功修改，先放到一边。</p>
+<p>开始写读取和写入进程内存的程序。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;Windows.h&gt; &#x2F;&#x2F; 上面提到的API都是在这里声明的</span><br><span class="line">#include &lt;cstdio&gt; &#x2F;&#x2F; C标准IO库</span><br><span class="line">#include &lt;cstdlib&gt; &#x2F;&#x2F; C标准库</span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	DWORD pid &#x3D; (DWORD)8512; &#x2F;&#x2F; 进程PID，可通过任务管理器查看，自行修改成被修改程序的PID</span><br><span class="line">	HANDLE handle &#x3D; OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid); &#x2F;&#x2F; 获得进程句柄</span><br><span class="line">	if (handle &#x3D;&#x3D; INVALID_HANDLE_VALUE) &#x2F;&#x2F; 出错就报错和退出</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;OpenProcess failed\n&quot;);</span><br><span class="line">		return -1;</span><br><span class="line">	&#125;</span><br><span class="line">	int address &#x3D; 0x0061FE4C; &#x2F;&#x2F; 要读取和修改的内存地址，可以通过CheatEngine获取，这里是变量count的地址</span><br><span class="line">	int *p &#x3D; (int*)malloc(sizeof(int)); &#x2F;&#x2F; 动态申请内存(似乎不动态申请会报错，不懂为啥)</span><br><span class="line">	DWORD len &#x3D; 0;</span><br><span class="line">	while (true)</span><br><span class="line">	&#123;</span><br><span class="line">		if (ReadProcessMemory(handle, (LPCVOID)address, p, sizeof(int), &amp;len)) &#x2F;&#x2F; 读取</span><br><span class="line">		&#123;</span><br><span class="line">			printf(&quot;Read a number: %d\n&quot;, *p); &#x2F;&#x2F; 打印出读取到的值</span><br><span class="line">		&#125;</span><br><span class="line">		printf(&quot;Input a number to write in memory\n&quot;); </span><br><span class="line">		scanf_s(&quot;%d&quot;, p); &#x2F;&#x2F; 输入用作写入的值</span><br><span class="line">		if (WriteProcessMemory(handle, (LPVOID)address, p, sizeof(int), &amp;len)) &#x2F;&#x2F; 写入</span><br><span class="line">		&#123;</span><br><span class="line">			printf(&quot;Write success\n&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 以上代码在 Windows10专业版 VisualStudio 2017 专业版编译通过</span><br></pre></td></tr></table></figure>
+<p>编译运行<br><img src="/pics/11850278-8f3f06bda292be35.png" alt="第一次读取count"><br>可以看到，成功的读取到了变量count的值，再试试修改count的值，输入1234，回车<br><img src="/pics/11850278-8310f18a48843883.png" alt="写入count并再次读取"><br>修改成功了！从另一个程序看看</p>
+<p><img src="/pics/11850278-42202d68bc27ecdf.png" alt="被修改程序打印count的值作检测"><br>果然修改成功了！！！多么激动人心，count 自减了一次，再读取一下试试</p>
+<p><img src="/pics/11850278-d291aa0a94c9c739.png" alt=""><br><br>至此，很简单的内存读写就实现了，多使用这几个API，就可以熟练的去修改一些内存中的值啦，可以用C++做一些小游戏的外挂了哦。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>0xbz7sb7</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Programming/"># Programming</a>
+                    
+                        <a href="/tags/C/"># C++</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/19742/">随机迷宫生成和寻路</a>
+            
+            
+            <a class="next" rel="next" href="/2018/3357/">C语言指针声明小结</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="jinrishici-container">
+        <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        <span id="poem-sentence">正在加载今日诗词....</span><span id="poem-info"></span>
+        <script type="text/javascript">
+        jinrishici.load(function(result) {
+            // console.log(result)
+            var sentence = document.querySelector("#poem-sentence")
+            var info = document.querySelector("#poem-info")
+            sentence.innerHTML = result.data.content
+            info.innerHTML = " -- " + result.data.origin.author + " 《" + result.data.origin.title + "》"
+        })
+        </script>
+    </div>
+    <div class="copyright">
+        <span>© 2020 0xbz7sb7 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | <a href="https://www.jinrishici.com/" target="_blank">今日诗词</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

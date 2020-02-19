@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="0xbz7sb7">
+
+
+    <meta name="subtitle" content="欢迎交流学习">
+
+
+
+
+<title>C语言指针小记 | 0xbz7sb7</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">0xbz7sb7&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">0xbz7sb7&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">C语言指针小记</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">0xbz7sb7</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 20, 2018&nbsp;&nbsp;0:36:48</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/C/">C</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>今天写作业代码，遇到一些小问题，记录一下解决过程。</p>
+<p>先贴出最早的问题代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; linklist.c</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line"></span><br><span class="line">typedef struct node &#123;</span><br><span class="line">    int          data;</span><br><span class="line">    struct node* next;</span><br><span class="line">&#125; node, *Node;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    Node head &#x3D; NULL, tail &#x3D; NULL, p_new &#x3D; NULL;</span><br><span class="line">    int temp;</span><br><span class="line">    while((scanf(&quot;%d&quot;, &amp;temp) !&#x3D; EOF) &amp;&amp; getchar() !&#x3D; &#39;\n&#39;) &#123;</span><br><span class="line">        p_new &#x3D; (Node)malloc(sizeof(node));</span><br><span class="line">        p_new-&gt;data &#x3D; temp;</span><br><span class="line">        if(head &#x3D;&#x3D; NULL)</span><br><span class="line">        &#123;</span><br><span class="line">            head &#x3D; p_new;</span><br><span class="line">            tail &#x3D; p_new;</span><br><span class="line">        &#125;</span><br><span class="line">        tail-&gt;next &#x3D; p_new;</span><br><span class="line">        tail &#x3D; p_new;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Node max &#x3D; head, p &#x3D; head;</span><br><span class="line">    while(p !&#x3D; NULL) &#123;</span><br><span class="line">        if(p-&gt;data &gt; max-&gt;data) &#123;</span><br><span class="line">            max &#x3D; p;</span><br><span class="line">        &#125;</span><br><span class="line">        p &#x3D; p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    p &#x3D; head;</span><br><span class="line">    while(p !&#x3D; NULL &amp;&amp; p-&gt;next !&#x3D; max) &#123;</span><br><span class="line">        p &#x3D; p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    p-&gt;next &#x3D; max-&gt;next;</span><br><span class="line">    max-&gt;next &#x3D; NULL;</span><br><span class="line">    tail-&gt;next &#x3D; max;</span><br><span class="line">    p &#x3D; head;</span><br><span class="line">    while(p !&#x3D; NULL) &#123;</span><br><span class="line">        printf(&quot;%d &quot;, p-&gt;data);</span><br><span class="line">        p &#x3D; p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    printf(&quot;\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从控制台输入一组数据（不定量），每输入一个就插入链表尾部，输入完成后找到最大节点并将最大节点移动到链表尾部</p>
+<p>但是在测试的时候发现不对劲，出现了无限循环</p>
+<p>经过一系列排查，发现是因为出现了<strong>野指针</strong>！</p>
+<p><strong>在第15行，只给<code>p_new-&gt;data</code>赋值，没有给<code>p_new-&gt;next</code>赋值，<code>p_new-&gt;next</code>成为野指针，而在后面第26行等判断指针不为<code>NULL</code>的语句始终为真，导致无限循环</strong></p>
+<p><strong>所以修改方案就是在第15行后面添加一行<code>p_new-&gt;next = NULL;</code></strong></p>
+<p>这一点修改之后，做测试，发现始终都不会打印出链表最后一个值</p>
+<p><img src="/pics/11850278-59a7d66f39a64189.png" alt="可以看到2没有了"></p>
+<p>这就让我思考，难道是链表操作有误？</p>
+<p>在经过一系列排查之后，再次找到问题所在</p>
+<p><strong>第13行输入判断条件有误，<code>getchar() != &#39;\n&#39;</code> ，前面的字符后都是空格<code>&#39; &#39;</code>，但最后一个数后面的字符是<code>&#39;\n&#39;</code>，于是表达式为假，于是就没有后面的循环了，最后一个数也自然没加进链表</strong></p>
+<p><strong>改进方法就是将循环改成下面这样</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">while(scanf(&quot;%d&quot;, &amp;temp)) &#123;</span><br><span class="line">    p_new &#x3D; (Node)malloc(sizeof(node));</span><br><span class="line">    p_new-&gt;data &#x3D; temp;</span><br><span class="line">    p_new-&gt;next &#x3D; NULL;</span><br><span class="line">    if(head &#x3D;&#x3D; NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        head &#x3D; p_new;</span><br><span class="line">        tail &#x3D; p_new;</span><br><span class="line">    &#125;</span><br><span class="line">    tail-&gt;next &#x3D; p_new;</span><br><span class="line">    tail &#x3D; p_new;</span><br><span class="line">    if(getchar() &#x3D;&#x3D; &#39;\n&#39;) &#123;</span><br><span class="line">        break;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样就不会有问题啦<br><img src="/pics/11850278-677c760628baf929.png" alt="一切正常"></p>
+<p>所以这次问题小记就到这里啦</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>0xbz7sb7</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/C/"># C</a>
+                    
+                        <a href="/tags/Summary/"># Summary</a>
+                    
+                        <a href="/tags/Programming/"># Programming</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/323/">我的第一篇博客</a>
+            
+            
+            <a class="next" rel="next" href="/2018/24568/">C语言动态链接与静态链接</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="jinrishici-container">
+        <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        <span id="poem-sentence">正在加载今日诗词....</span><span id="poem-info"></span>
+        <script type="text/javascript">
+        jinrishici.load(function(result) {
+            // console.log(result)
+            var sentence = document.querySelector("#poem-sentence")
+            var info = document.querySelector("#poem-info")
+            sentence.innerHTML = result.data.content
+            info.innerHTML = " -- " + result.data.origin.author + " 《" + result.data.origin.title + "》"
+        })
+        </script>
+    </div>
+    <div class="copyright">
+        <span>© 2020 0xbz7sb7 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | <a href="https://www.jinrishici.com/" target="_blank">今日诗词</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

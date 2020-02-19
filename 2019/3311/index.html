@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="0xbz7sb7">
+
+
+    <meta name="subtitle" content="欢迎交流学习">
+
+
+
+
+<title>初探 Kubernetes（二） | 0xbz7sb7</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">0xbz7sb7&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">0xbz7sb7&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">初探 Kubernetes（二）</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">0xbz7sb7</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 31, 2019&nbsp;&nbsp;16:46:41</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Kubernetes/">Kubernetes</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="记录一些小问题"><a href="#记录一些小问题" class="headerlink" title="记录一些小问题"></a>记录一些小问题</h1><h2 id="VirtualBox-出现-NS-ERROR-FAILURE-0x80004005-错误"><a href="#VirtualBox-出现-NS-ERROR-FAILURE-0x80004005-错误" class="headerlink" title="VirtualBox 出现 NS_ERROR_FAILURE(0x80004005) 错误"></a>VirtualBox 出现 NS_ERROR_FAILURE(0x80004005) 错误</h2><p>这个问题我是很懵逼的，一开始不知道为什么出现的，经过许多查阅后，得到了几个解法（但是对我的问题没用，似乎这个错误的产生原因有许多）</p>
+<ol>
+<li>重装 VirtualBox</li>
+<li>VirtualBox 文件夹里 改把 vbox 文件删了，重开虚拟机</li>
+<li>卸载重装后，在 设置-隐私和安全 中允许给 VirtualBox 权限</li>
+</ol>
+<p>如果这几个方法解决不了你的问题，那还是自己Google吧</p>
+<p>ps: 我的问题就很厉害了，同样是这个报错，但是百般搜索无果，可能是我动坏了底层的东西，重装系统之后问题解决</p>
+<h2 id="Minukube-启动时-Pull-Image-失败"><a href="#Minukube-启动时-Pull-Image-失败" class="headerlink" title="Minukube 启动时 Pull Image 失败"></a>Minukube 启动时 Pull Image 失败</h2><p>这个问题。。主要还是因为 Kubernetes 是外国的嘛，国内访问的话延迟会比较高或者被 Block，所以解决方案也很简单</p>
+<a id="more"></a>
+
+<ol>
+<li>代理</li>
+<li>用国内可以访问的源</li>
+</ol>
+<h3 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h3><p>代理的话，就不用多解释了，一般配置好之后会监听在某个端口上，我们要做的就是让 Minikube 在 Pull Image 的时候走这个端口，直接在终端配置环境变量就行了</p>
+<blockquote>
+<p>export HTTP_PROXY=127.0.0.1:8080<br>export HTTPS_PROXY=127.0.0.1:8080</p>
+</blockquote>
+<p>或者</p>
+<blockquote>
+<p>HTTP_PROXY=127.0.0.1:8080 HTTPS_PROXY=127.0.0.1:8080 minikube start</p>
+</blockquote>
+<h3 id="能访问的源"><a href="#能访问的源" class="headerlink" title="能访问的源"></a>能访问的源</h3><p>这个就比较简单了，DockerHub，就行，虽然还是比较慢，很多 Kubernetes 的镜像在 DockerHub 都有嗷，只要Pull下来改一下 tag 就行了</p>
+<blockquote>
+<p>docker pull mirrorgooglecontainers/kube-apiserver:v1.14.0<br>docker tag mirrorgooglecontainers/kube-apiserver:v1.14.0 k8s.gcr.io/kube-apiserver:1.14.0</p>
+</blockquote>
+<h2 id="Kubernetes-使用-Docker-本地的-Image"><a href="#Kubernetes-使用-Docker-本地的-Image" class="headerlink" title="Kubernetes 使用 Docker 本地的 Image"></a>Kubernetes 使用 Docker 本地的 Image</h2><p>上一篇文章中我提到了一个，没有解释的神奇命令，这里来解释一下</p>
+<p>先说问题和解决方案，再详细描述</p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>问题就是 不知道本地有一个Docker，Minikube 里面还有另外一个 Docker，并不互通</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>在执行 <code>docker build</code> 之前，先执行一句 <code>eval $(minikube docker-env)</code> 使 Docker client 连接到 Minikube 中的 Docker daemon 上，之后的操作就可以正常进行了</p>
+<h3 id="问题起源"><a href="#问题起源" class="headerlink" title="问题起源"></a>问题起源</h3><p>自己写了一个简单的 HelloWorld 服务，打算用 Kubernetes 部署，看到书上讲 Kubernetes 是可以直接使用Docker 镜像的，于是将服务构建成镜像，但没有推送到 Hub 上，打算就在本地供测试使用，万万没想到，出现了一些问题</p>
+<h3 id="具体"><a href="#具体" class="headerlink" title="具体"></a>具体</h3><p>构建镜像之后，执行 <code>docker images</code> 能看到镜像构建成功</p>
+<p><img src="/pics/1554035962870-74984556-e663-4c6f-bb3e-c5a2a0fde779.png" alt="docker images"></p>
+<p>但是在创建 Deployments 后启动 Pod 的时候出现了问题</p>
+<blockquote>
+<p>$ kubectl run hello-go –image=hello-go:v1.0 –port=8080<br>deployment.apps “hello-go” created<br>$ kubectl get pods</p>
+</blockquote>
+<p><img src="/pics/1554192581403-b6458b9b-69c1-4813-87f3-d177dc0b8816.png" alt="kubectl get pods"></p>
+<p>结果又出现了错误，实在搞不懂为什么明明本地有镜像 Minikube 却还要去拉取，禁用拉取之后又告诉不行，死活不使用本地的镜像，于是又开始查询，经过了很长时间的查询（可能书上有但我不仔细），才找到了解决方案和原因，<strong>原来 Minikube 自己维护了一个 Docker daemon，可以通过 <code>minikube ssh</code> 命令连接到 Minikube 的 shell ，再执行 <code>docker images</code> 查看 Minikube 内的 Docker 镜像</strong></p>
+<blockquote>
+<p>$ minikube ssh<br>$ docker images</p>
+</blockquote>
+<p><img src="/pics/1554194007240-2217cf6d-f9dd-44db-beed-b042d183cf7c.png" alt="docker images"></p>
+<p>可以看到，<strong>原来 Minikube 的本地真的没有 hello-go 镜像，这就很好的解释了为什么它会去拉取镜像，设置为永不拉取之后出现错误的问题了</strong></p>
+<p>知道问题因何而起，那解决起来就简单了</p>
+<p>注意到 Minikube 有一个子命令 docker-env</p>
+<p><img src="/pics/1554194287519-8c95d777-7d86-4934-a49c-88b711e2f30f.png" alt="minikube"></p>
+<p>执行看看</p>
+<p><img src="/pics/1554194319879-5a4fbbac-1b3d-497f-92ab-f1708f364b98.png" alt="minikube docker-env"></p>
+<p>给出了 Minikube 内部 Docker daemon 的地址和端口，提示执行 <code>eval $(minikube docker-env)</code> ，照着做就可以使你的 Docker client 直接操作 Minikube 中的 Docker daemon，于是再构建镜像就是保存在 Minikube 中了</p>
+<blockquote>
+<p>$ eval $(minikube docker-env)<br>$ cd ./projectDirectory     // 将工作目录切换到项目文件夹下<br>$ docker build -t hello-go:v1.0 .<br>$ docker images</p>
+</blockquote>
+<p><img src="/pics/1554194695441-a57f6a9d-0830-4820-875c-857511f19727.png" alt="docker images"></p>
+<p>这样，就成功构建了镜像并且镜像是保存在 Minikube 中的 Docker 中了，再用 kubectl 创建 deployments</p>
+<blockquote>
+<p>$ kubectl run hello-nice –image=hello-go:v1.0 –port=8080<br>deployment.apps “hello-nice” created<br>$ kubectl get pods</p>
+</blockquote>
+<p><img src="/pics/1554194859859-fd9c492f-d9d5-4d01-bb4a-3c8326bbb2c0.png#align=left&display=inline&height=137&name=image.png&originHeight=137&originWidth=675&size=27688&status=done&width=675" alt="kubectl get pods"></p>
+<p>可以看到，不仅新建的 Pods 正常运行了，而且之前因为没有镜像而出错的 Pods 都正常了！</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>在尝试minikube的过程中笔者就只遇到了这些问题，很庆幸都解决掉了，那这篇文章就记录到这里。</p>
+<p>读者在Minikube使用过程中有什么问题都可以联系笔者噢，说不定可以帮点小忙:)</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>0xbz7sb7</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%B0%8F%E9%97%AE%E9%A2%98/"># 小问题</a>
+                    
+                        <a href="/tags/Kubernetes/"># Kubernetes</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/406/">Flutter 问题一记</a>
+            
+            
+            <a class="next" rel="next" href="/2019/3310/">初探 Kubernetes（一）</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="jinrishici-container">
+        <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        <span id="poem-sentence">正在加载今日诗词....</span><span id="poem-info"></span>
+        <script type="text/javascript">
+        jinrishici.load(function(result) {
+            // console.log(result)
+            var sentence = document.querySelector("#poem-sentence")
+            var info = document.querySelector("#poem-info")
+            sentence.innerHTML = result.data.content
+            info.innerHTML = " -- " + result.data.origin.author + " 《" + result.data.origin.title + "》"
+        })
+        </script>
+    </div>
+    <div class="copyright">
+        <span>© 2020 0xbz7sb7 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> | <a href="https://www.jinrishici.com/" target="_blank">今日诗词</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
