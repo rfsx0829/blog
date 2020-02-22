@@ -228,7 +228,7 @@
 <p>$ minikube start<br>😄  minikube v1.0.0 on darwin (amd64)<br>🤹  Downloading Kubernetes v1.14.0 images in the background …<br>💡  Tip: Use ‘minikube start -p <name>‘ to create a new cluster, or ‘minikube delete’ to delete this one.<br>🏃  Re-using the currently running virtualbox VM for “minikube” …<br>⌛  Waiting for SSH access …<br>📶  “minikube” IP address is 192.168.99.104<br>🐳  Configuring Docker as the container runtime …<br>🐳  Version of container runtime is 18.06.2-ce<br>⌛  Waiting for image downloads to complete …<br>✨  Preparing Kubernetes environment …<br>🚜  Pulling images required by Kubernetes v1.14.0 …<br>🔄  Relaunching Kubernetes v1.14.0 using kubeadm …<br>⌛  Waiting for pods: apiserver proxy etcd scheduler controller dns<br>📯  Updating kube-proxy configuration …<br>🤔  Verifying component health …..<br>💗  kubectl is now configured to use “minikube”<br>🏄  Done! Thank you for using minikube!</p>
 <p>$ kubectl get nodes</p>
 </blockquote>
-<p><img src="/pics/1554018821347-c95d911f-88cb-4a73-b226-c425a84932e8.png" alt="kubectl get pods"></p>
+<p><img src="/blog/pics/1554018821347-c95d911f-88cb-4a73-b226-c425a84932e8.png" alt="kubectl get pods"></p>
 <p>可以看到， minikube 启动成功之后，用 <code>kubectl get nodes</code> 可以成功获取到 nodes 的信息，一切正常！</p>
 <h2 id="写一个小服务，尝试部署"><a href="#写一个小服务，尝试部署" class="headerlink" title="写一个小服务，尝试部署"></a>写一个小服务，尝试部署</h2><h3 id="Hello-World-代码"><a href="#Hello-World-代码" class="headerlink" title="Hello World 代码"></a>Hello World 代码</h3><p>此处采用Go语言，因为可以静态编译且语法简单</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.go</span></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"net/http"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	http.HandleFunc(<span class="string">"/"</span>, handler)</span><br><span class="line">	fmt.Println(<span class="string">"Listening on http://localhost:8080/"</span>)</span><br><span class="line">	http.ListenAndServe(<span class="string">":8080"</span>, <span class="literal">nil</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">handler</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	w.WriteHeader(http.StatusOK)</span><br><span class="line">	w.Write([]<span class="keyword">byte</span>(<span class="string">"Hello World"</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -237,7 +237,7 @@
 <p>$ go run main.go<br>Listening on <a href="http://localhost:8080/" target="_blank" rel="noopener">http://localhost:8080/</a></p>
 </blockquote>
 <p>用浏览器打开上面的网址可以看到</p>
-<p><img src="/pics/1554013868546-bc0e4859-0672-4173-9b5b-99326c52373d.png" alt="浏览器访问"></p>
+<p><img src="/blog/pics/1554013868546-bc0e4859-0672-4173-9b5b-99326c52373d.png" alt="浏览器访问"></p>
 <p>成功输出了 Hello World</p>
 <p>下一步</p>
 <h3 id="静态编译"><a href="#静态编译" class="headerlink" title="静态编译"></a>静态编译</h3><p>可能有人会问会什么要静态编译，不能直接 <code>go run main.go</code> 吗</p>
@@ -262,28 +262,28 @@
 <blockquote>
 <p>$ docker build -t hello:v1.0 .<br>Sending build context to Docker daemon  11.73MB<br>Step 1/3 : FROM scratch<br>—&gt;<br>Step 2/3 : ADD ./main /main<br>—&gt; 636350b5d281<br>Step 3/3 : CMD [ “/main” ]<br>—&gt; Running in a54d3c9c3864<br>Removing intermediate container a54d3c9c3864<br>—&gt; 321b69c05fff<br>Successfully built 321b69c05fff<br>Successfully tagged hello:v1.0<br>$ docker images</p>
 </blockquote>
-<p><img src="/pics/1554018896187-c9afeaca-2042-42c8-aaf0-7ad775eb1c33.png" alt="docker images"></p>
+<p><img src="/blog/pics/1554018896187-c9afeaca-2042-42c8-aaf0-7ad775eb1c33.png" alt="docker images"></p>
 <p>可以看到，成功地构建了镜像，笔者这里镜像大小仅仅只有 7.34MB</p>
 <h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><p>部署分为两个步骤</p>
 <h4 id="创建-Deployments-和-Pods"><a href="#创建-Deployments-和-Pods" class="headerlink" title="创建 Deployments 和 Pods"></a>创建 Deployments 和 Pods</h4><blockquote>
 <p>$ kubectl run hello –image=hello:v1.0 –port=8080<br>deployment.apps “hello” created<br>$ kubectl get deployments</p>
 </blockquote>
-<p><img src="/pics/1554018939941-8516aaf8-b734-40ba-9e1c-4e1d66699988.png" alt="kubectl get deployments"></p>
+<p><img src="/blog/pics/1554018939941-8516aaf8-b734-40ba-9e1c-4e1d66699988.png" alt="kubectl get deployments"></p>
 <blockquote>
 <p>$ kubectl get pods</p>
 </blockquote>
-<p><img src="/pics/1554018967294-676d6ced-c2aa-4e43-8005-414c1e165a13.png" alt="kubectl get pods"></p>
+<p><img src="/blog/pics/1554018967294-676d6ced-c2aa-4e43-8005-414c1e165a13.png" alt="kubectl get pods"></p>
 <p>可以看到，Pods 已经准备好了</p>
 <h4 id="创建-Service-以供外部访问"><a href="#创建-Service-以供外部访问" class="headerlink" title="创建 Service 以供外部访问"></a>创建 Service 以供外部访问</h4><blockquote>
 <p>$ kubectl expose deployment hello –port=8080 –type=NodePort<br>service “hello” exposed<br>$ kubectl get services</p>
 </blockquote>
-<p><img src="/pics/1554018998759-1009c3b7-d614-4b01-85fe-6a23fe758bdc.png" alt="kubectl get services"></p>
+<p><img src="/blog/pics/1554018998759-1009c3b7-d614-4b01-85fe-6a23fe758bdc.png" alt="kubectl get services"></p>
 <p>可以看到，service 已经创建成功，执行以下命令来查看 service 的 ip 和端口</p>
 <p>ps: ip和端口以自己执行命令后输出的为准</p>
 <blockquote>
 <p>$ minikube service hello –url<br><a href="http://192.168.99.104:31537" target="_blank" rel="noopener">http://192.168.99.104:31537</a><br>$ curl <a href="http://192.168.99.104:31537" target="_blank" rel="noopener">http://192.168.99.104:31537</a><br>Hello World</p>
 </blockquote>
-<p><img src="/pics/1554017653231-56204059-016c-485a-bd07-7c6d3e6ce782.png" alt="浏览器访问"></p>
+<p><img src="/blog/pics/1554017653231-56204059-016c-485a-bd07-7c6d3e6ce782.png" alt="浏览器访问"></p>
 <p>使用浏览器打开，可以看到输出 Hello World，部署一切正常！</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>在部署的过程中其实遇到了很多困难，我会在接下来的一篇文章中详细说明，如果有遇到相同困难的朋友可以参考参考</p>
 

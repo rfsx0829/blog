@@ -19,15 +19,15 @@ ps: 其实是来自于 mma CTF 2016 ，只是我个人是在攻防世界做到�
 
 checksec 一下
 
-![checksec](../pics/20191007003.png)
+![checksec](/blog/pics/20191007003.png)
 
 是 32 位的程序，再 IDA 静态分析
 
-![main](../pics/20191007004.png)
+![main](/blog/pics/20191007004.png)
 
 可以看到，存在格式化字符串漏洞，再看看读取字符串的函数 `getnline`
 
-![getnline](../pics/20191007005.png)
+![getnline](/blog/pics/20191007005.png)
 
 找到输入的字符串中第一个 '\n' 并且讲其修改为 '\0' 之后，调用 `strlen`
 
@@ -37,7 +37,7 @@ checksec 一下
 
 因为 Linux 的程序的执行流程，是把 `main` 函数作为参数传给 `__libc_start_main` 的，并且在执行完 main 后其实还有其他工作，具体的可以参见下面这张图片
 
-![cool](../pics/20191007006.png)
+![cool](/blog/pics/20191007006.png)
 
 在执行完 `main` 后还会调用 `finiarray` 和 `destructor` 等函数，所以考虑修改 GOT 表中 `finiarray` 项指回 `main` 函数，这样在第一次输入完字符串之后还会再调用一次 `main` 函数，就可以输入两次，第一次修改 GOT 表，第二次就传入字符串 `"/bin/sh"` 拿到 shell
 

@@ -70,21 +70,21 @@ ps: 我的问题就很厉害了，同样是这个报错，但是百般搜索无�
 
 构建镜像之后，执行 `docker images` 能看到镜像构建成功
 
-![docker images](./../pics/1554035962870-74984556-e663-4c6f-bb3e-c5a2a0fde779.png)
+![docker images](/blog/pics/1554035962870-74984556-e663-4c6f-bb3e-c5a2a0fde779.png)
 
 但是在创建 Deployments 后启动 Pod 的时候出现了问题
 > $ kubectl run hello-go --image=hello-go:v1.0 --port=8080
 > deployment.apps "hello-go" created
 > $ kubectl get pods
 
-![kubectl get pods](./../pics/1554192581403-b6458b9b-69c1-4813-87f3-d177dc0b8816.png)
+![kubectl get pods](/blog/pics/1554192581403-b6458b9b-69c1-4813-87f3-d177dc0b8816.png)
 
 结果又出现了错误，实在搞不懂为什么明明本地有镜像 Minikube 却还要去拉取，禁用拉取之后又告诉不行，死活不使用本地的镜像，于是又开始查询，经过了很长时间的查询（可能书上有但我不仔细），才找到了解决方案和原因，**原来 Minikube 自己维护了一个 Docker daemon，可以通过 `minikube ssh` 命令连接到 Minikube 的 shell ，再执行 `docker images` 查看 Minikube 内的 Docker 镜像**
 
 > $ minikube ssh
 > $ docker images
 
-![docker images](./../pics/1554194007240-2217cf6d-f9dd-44db-beed-b042d183cf7c.png)
+![docker images](/blog/pics/1554194007240-2217cf6d-f9dd-44db-beed-b042d183cf7c.png)
 
 可以看到，**原来 Minikube 的本地真的没有 hello-go 镜像，这就很好的解释了为什么它会去拉取镜像，设置为永不拉取之后出现错误的问题了**
 
@@ -92,11 +92,11 @@ ps: 我的问题就很厉害了，同样是这个报错，但是百般搜索无�
 
 注意到 Minikube 有一个子命令 docker-env
 
-![minikube](./../pics/1554194287519-8c95d777-7d86-4934-a49c-88b711e2f30f.png)
+![minikube](/blog/pics/1554194287519-8c95d777-7d86-4934-a49c-88b711e2f30f.png)
 
 执行看看
 
-![minikube docker-env](./../pics/1554194319879-5a4fbbac-1b3d-497f-92ab-f1708f364b98.png)
+![minikube docker-env](/blog/pics/1554194319879-5a4fbbac-1b3d-497f-92ab-f1708f364b98.png)
 
 给出了 Minikube 内部 Docker daemon 的地址和端口，提示执行 `eval $(minikube docker-env)` ，照着做就可以使你的 Docker client 直接操作 Minikube 中的 Docker daemon，于是再构建镜像就是保存在 Minikube 中了
 
@@ -105,7 +105,7 @@ ps: 我的问题就很厉害了，同样是这个报错，但是百般搜索无�
 > $ docker build -t hello-go:v1.0 .
 > $ docker images
 
-![docker images](./../pics/1554194695441-a57f6a9d-0830-4820-875c-857511f19727.png)
+![docker images](/blog/pics/1554194695441-a57f6a9d-0830-4820-875c-857511f19727.png)
 
 这样，就成功构建了镜像并且镜像是保存在 Minikube 中的 Docker 中了，再用 kubectl 创建 deployments
 
@@ -113,7 +113,7 @@ ps: 我的问题就很厉害了，同样是这个报错，但是百般搜索无�
 > deployment.apps "hello-nice" created
 > $ kubectl get pods
 
-![kubectl get pods](./../pics/1554194859859-fd9c492f-d9d5-4d01-bb4a-3c8326bbb2c0.png#align=left&display=inline&height=137&name=image.png&originHeight=137&originWidth=675&size=27688&status=done&width=675)
+![kubectl get pods](/blog/pics/1554194859859-fd9c492f-d9d5-4d01-bb4a-3c8326bbb2c0.png#align=left&display=inline&height=137&name=image.png&originHeight=137&originWidth=675&size=27688&status=done&width=675)
 
 可以看到，不仅新建的 Pods 正常运行了，而且之前因为没有镜像而出错的 Pods 都正常了！
 

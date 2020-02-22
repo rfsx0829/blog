@@ -28,7 +28,7 @@ abbrlink: 406
 
 在 Flutter 的官方文档上有这么一个 Note
 
-![Note](./../pics/1554481707317-e938bb0a-666c-48fb-970e-eb7592538ce5.png)
+![Note](/blog/pics/1554481707317-e938bb0a-666c-48fb-970e-eb7592538ce5.png)
 
 翻译一下：Flutter **依赖一个 Android Studio 的完整安装** 来支持它对 Android 平台的依赖，然而，你可以在很多编辑器里写你的 Flutter 应用
 

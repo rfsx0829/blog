@@ -203,16 +203,16 @@
         <div class="post-content">
             <p>既然我已经搭建了个人博客，就想要把方法也分享给我的朋友们，让朋友们也能搭建一个自己的博客<del>(提升逼格)</del>。不多说，下面就是教程。</p>
 <h4 id="基础需求"><a href="#基础需求" class="headerlink" title="基础需求"></a>基础需求</h4><p>联网的电脑一台，以下教程仅以Windows操作系统做示范<br>GitHub账号一个，如果没有账号可前往<a href="https://github.com" target="_blank" rel="noopener">GitHub官网</a>免费注册<br>域名一个（也可以不用）， 可前往<a href="https://cn.aliyun.com" target="_blank" rel="noopener">阿里云</a>进行域名注册</p>
-<h4 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h4><h5 id="NodeJs-的安装"><a href="#NodeJs-的安装" class="headerlink" title="NodeJs 的安装"></a>NodeJs 的安装</h5><p>打开<a href="https://nodejs.org" target="_blank" rel="noopener">NodeJs官网</a>后<img src="/pics/11850278-8b5977e42b6622f2.png" alt="">)点击DOWNLOADS后可见到如下界面<img src="/pics/11850278-c0248b3c7363f27e.png" alt=""><br>下载自己对应平台的NodeJs，进行安装，安装完成后打开命令提示符或者终端，输入</p>
+<h4 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h4><h5 id="NodeJs-的安装"><a href="#NodeJs-的安装" class="headerlink" title="NodeJs 的安装"></a>NodeJs 的安装</h5><p>打开<a href="https://nodejs.org" target="_blank" rel="noopener">NodeJs官网</a>后<img src="/blog/pics/11850278-8b5977e42b6622f2.png" alt="">)点击DOWNLOADS后可见到如下界面<img src="/blog/pics/11850278-c0248b3c7363f27e.png" alt=""><br>下载自己对应平台的NodeJs，进行安装，安装完成后打开命令提示符或者终端，输入</p>
 <blockquote>
 <p>node -v</p>
 </blockquote>
-<p>如果输出NodeJs的版本号，参见下图<img src="/pics/11850278-16e3cbac93971cf7.png" alt=""><br>说明安装NodeJs成功。</p>
+<p>如果输出NodeJs的版本号，参见下图<img src="/blog/pics/11850278-16e3cbac93971cf7.png" alt=""><br>说明安装NodeJs成功。</p>
 <h5 id="Hexo的安装及博客搭建"><a href="#Hexo的安装及博客搭建" class="headerlink" title="Hexo的安装及博客搭建"></a>Hexo的安装及博客搭建</h5><p>打开命令行,确保电脑接入网络，输入</p>
 <blockquote>
 <p>npm install -g hexo-cli</p>
 </blockquote>
-<p>等待一两分钟<img src="/pics/11850278-8373d7467605e9e7.png" alt=""><br>如图安装完成后，再输入</p>
+<p>等待一两分钟<img src="/blog/pics/11850278-8373d7467605e9e7.png" alt=""><br>如图安装完成后，再输入</p>
 <blockquote>
 <p>cd desktop</p>
 </blockquote>
@@ -220,17 +220,17 @@
 <blockquote>
 <p>hexo init myblog</p>
 </blockquote>
-<p>出现如图<img src="/pics/11850278-f02664d93440ed5b.png" alt=""><br>说明初始化成功，可以见到桌面上多了一个名为myblog的文件夹<img src="/pics/11850278-34e8e3267e494a04.png" alt=""><br>再在命令行输入</p>
+<p>出现如图<img src="/blog/pics/11850278-f02664d93440ed5b.png" alt=""><br>说明初始化成功，可以见到桌面上多了一个名为myblog的文件夹<img src="/blog/pics/11850278-34e8e3267e494a04.png" alt=""><br>再在命令行输入</p>
 <blockquote>
 <p>cd myblog<br>hexo generate<br>hexo server</p>
 </blockquote>
-<p><img src="/pics/11850278-4b50e3cab0b74818.png" alt="">如果如图所示，说明博客初步搭建成功了，可以打开浏览器输入网址<a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> <img src="/pics/11850278-4d50f9bd8ca554d5.png" alt="">可见到如图的页面，不过这还只是本地的，接下来就来让它可以被外网访问。</p>
-<h5 id="GitHub仓库创建"><a href="#GitHub仓库创建" class="headerlink" title="GitHub仓库创建"></a>GitHub仓库创建</h5><p>首先，你需要一个GitHub的账号，如果没有账号可以自己注册，此处省略注册教程，打开<a href="https://github.com" target="_blank" rel="noopener">GitHub官网</a>，登陆账号，进入页面后点击<img src="/pics/11850278-c8e314fdaebc1376.png" alt="">创建仓库用以存放博客，输入仓库名称为</p>
+<p><img src="/blog/pics/11850278-4b50e3cab0b74818.png" alt="">如果如图所示，说明博客初步搭建成功了，可以打开浏览器输入网址<a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> <img src="/blog/pics/11850278-4d50f9bd8ca554d5.png" alt="">可见到如图的页面，不过这还只是本地的，接下来就来让它可以被外网访问。</p>
+<h5 id="GitHub仓库创建"><a href="#GitHub仓库创建" class="headerlink" title="GitHub仓库创建"></a>GitHub仓库创建</h5><p>首先，你需要一个GitHub的账号，如果没有账号可以自己注册，此处省略注册教程，打开<a href="https://github.com" target="_blank" rel="noopener">GitHub官网</a>，登陆账号，进入页面后点击<img src="/blog/pics/11850278-c8e314fdaebc1376.png" alt="">创建仓库用以存放博客，输入仓库名称为</p>
 <blockquote>
 <p><strong>你的GitHub用户名</strong>.github.io</p>
 </blockquote>
-<p>例如我的用户名是Zeng1999,就输入<img src="/pics/11850278-73e71457f501e3c6.png" alt="">)然后点击下面的<img src="/pics/11850278-32523a8f29812acc.png" alt="">创建仓库。创建完成后就开始Git的安装。</p>
-<h5 id="Git的安装及配置"><a href="#Git的安装及配置" class="headerlink" title="Git的安装及配置"></a>Git的安装及配置</h5><p>Git是一个开源的分布式版本控制系统，我们可以使用Git将网站同步到GitHub上。<br>可到<a href="https://git-scm.com/" target="_blank" rel="noopener">Git官网</a>进行下载和安装，这里不再赘述。<br>安装完成后，在桌面单击右键<img src="/pics/11850278-98d52f2831ff0701.png" alt="">点击Git Bash Here<img src="/pics/11850278-cc9522efbd10d905.png" alt="">输入</p>
+<p>例如我的用户名是Zeng1999,就输入<img src="/blog/pics/11850278-73e71457f501e3c6.png" alt="">)然后点击下面的<img src="/blog/pics/11850278-32523a8f29812acc.png" alt="">创建仓库。创建完成后就开始Git的安装。</p>
+<h5 id="Git的安装及配置"><a href="#Git的安装及配置" class="headerlink" title="Git的安装及配置"></a>Git的安装及配置</h5><p>Git是一个开源的分布式版本控制系统，我们可以使用Git将网站同步到GitHub上。<br>可到<a href="https://git-scm.com/" target="_blank" rel="noopener">Git官网</a>进行下载和安装，这里不再赘述。<br>安装完成后，在桌面单击右键<img src="/blog/pics/11850278-98d52f2831ff0701.png" alt="">点击Git Bash Here<img src="/blog/pics/11850278-cc9522efbd10d905.png" alt="">输入</p>
 <blockquote>
 <p>git config –global user.name <strong>你的GitHub用户名</strong><br>git config –global user.email <strong>你的GitHub注册邮箱</strong></p>
 </blockquote>
@@ -238,19 +238,19 @@
 <blockquote>
 <p>ssh-keygen -t rsa -C <strong>你的GitHub注册邮箱</strong></p>
 </blockquote>
-<p>提示输入保存目录，回车使用默认目录即可<br>提示输入密码短语，输完后回车<br>提示再次输入密码短语，输入相同的密码后回车<br>密钥生成完成，可在用户目录下的.ssh文件夹下找到 id_rsa.pub 公钥<img src="/pics/11850278-31aad8a628bda58e.png" alt="">右键以文本形式打开，复制其中的全部内容后关闭<br>打开GitHub，点击自己头像-settings<img src="/pics/11850278-30c62dd7516b0b02.png" alt="">再在左边找到SSH and GPG keys这一项<img src="/pics/11850278-68503e1cb59f56fa.png" alt="">找到New SSH key<img src="/pics/11850278-b2449c1411df373d.png" alt="">点击，标题可任意，把刚才复制的粘贴到key栏中再点击 Add SSH key<img src="/pics/11850278-c7e47ff4180167f0.png" alt=""><br>添加完成后再打开Git Bash，输入</p>
+<p>提示输入保存目录，回车使用默认目录即可<br>提示输入密码短语，输完后回车<br>提示再次输入密码短语，输入相同的密码后回车<br>密钥生成完成，可在用户目录下的.ssh文件夹下找到 id_rsa.pub 公钥<img src="/blog/pics/11850278-31aad8a628bda58e.png" alt="">右键以文本形式打开，复制其中的全部内容后关闭<br>打开GitHub，点击自己头像-settings<img src="/blog/pics/11850278-30c62dd7516b0b02.png" alt="">再在左边找到SSH and GPG keys这一项<img src="/blog/pics/11850278-68503e1cb59f56fa.png" alt="">找到New SSH key<img src="/blog/pics/11850278-b2449c1411df373d.png" alt="">点击，标题可任意，把刚才复制的粘贴到key栏中再点击 Add SSH key<img src="/blog/pics/11850278-c7e47ff4180167f0.png" alt=""><br>添加完成后再打开Git Bash，输入</p>
 <blockquote>
 <p>ssh <a href="mailto:git@github.com">git@github.com</a></p>
 </blockquote>
-<p>如果出现<img src="/pics/11850278-9448ae6ee4f8b611.png" alt="">则表明密钥可用，能连接上GitHub了。</p>
-<h5 id="外网部署"><a href="#外网部署" class="headerlink" title="外网部署"></a>外网部署</h5><p>找到之前在桌面上生成的文件夹myblog<img src="/pics/11850278-f54cad34d882fbe8.png" alt="">)打开，找到一个名为_config.yml的文件<img src="/pics/11850278-6fe4a5c7692beb26.png" alt="">)用文本编辑器打开，找到最后的几行<img src="/pics/11850278-d26f8ad1776f8212.png" alt="">)改成如图，图中<strong>红框部分修改为你的GitHub用户名</strong><img src="/pics/11850278-f6b15adc17b4bbc0.png" alt="">修改完后保存并关闭文本编辑器。<br>打开桌面上的myblog文件夹，按住shift单击右键，点击在此处打开power shell窗口 或者 在此处打开命令提示符，再打开的窗口输入</p>
+<p>如果出现<img src="/blog/pics/11850278-9448ae6ee4f8b611.png" alt="">则表明密钥可用，能连接上GitHub了。</p>
+<h5 id="外网部署"><a href="#外网部署" class="headerlink" title="外网部署"></a>外网部署</h5><p>找到之前在桌面上生成的文件夹myblog<img src="/blog/pics/11850278-f54cad34d882fbe8.png" alt="">)打开，找到一个名为_config.yml的文件<img src="/blog/pics/11850278-6fe4a5c7692beb26.png" alt="">)用文本编辑器打开，找到最后的几行<img src="/blog/pics/11850278-d26f8ad1776f8212.png" alt="">)改成如图，图中<strong>红框部分修改为你的GitHub用户名</strong><img src="/blog/pics/11850278-f6b15adc17b4bbc0.png" alt="">修改完后保存并关闭文本编辑器。<br>打开桌面上的myblog文件夹，按住shift单击右键，点击在此处打开power shell窗口 或者 在此处打开命令提示符，再打开的窗口输入</p>
 <blockquote>
 <p>npm install hexo-deployer-git –save<br>hexo clean<br>hexo generate<br>hexo deploy</p>
 </blockquote>
-<p>出现如图提示，部署到GitHub成功<img src="/pics/11850278-c35015386db523ca.png" alt=""><br>激动人心的时刻到了，打开浏览器打开网址 <strong>你的GitHub用户名.github.io</strong> <img src="/pics/11850278-b9f083a49c4ceae3.png" alt=""><br>出现博客主页，部署完成，可从外网访问你的博客了</p>
-<h5 id="使用个性域名"><a href="#使用个性域名" class="headerlink" title="使用个性域名"></a>使用个性域名</h5><p>首先，你需要有一个域名，可以到<a href="https://cn.aliyun.com" target="_blank" rel="noopener">阿里云</a>进行域名注册，具体操作就不演示了，我已经有了一个域名，下面演示如何通过个性域名访问到个人博客。<br>打开GitHub，打开博客的仓库，点击设置<img src="/pics/11850278-21444fd7584e357d.png" alt="">)找到下面这一行<img src="/pics/11850278-f5bb8fdfed48f9eb.png" alt="">输入你的域名后点击Save保存。</p>
-<p>设置域名解析，以阿里云为例，进入控制台，找到云解析DNS，点击要用作博客的域名<img src="/pics/11850278-41cdc404e9b190e7.png" alt="">然后点击 添加解析<img src="/pics/11850278-aa9f7629d632251e.png" alt=""> <img src="/pics/11850278-8048d5f95e69e5cf.png" alt="">把红框内的修改为你的GitHub用户名，点击确认。</p>
-<p>打开MyBlog文件夹，打开其中的source文件夹，新建一个文本文档，重命名为<strong>CNAME（无后缀名）</strong><img src="/pics/11850278-9f56222a068c8ca7.png" alt="">)然后用文本编辑器打开，输入你的域名，保存关闭即可<img src="/pics/11850278-af342c9b75a0818e.png" alt="">至此，域名设置就完成了。在MyBlog文件夹下打开命令行，输入</p>
+<p>出现如图提示，部署到GitHub成功<img src="/blog/pics/11850278-c35015386db523ca.png" alt=""><br>激动人心的时刻到了，打开浏览器打开网址 <strong>你的GitHub用户名.github.io</strong> <img src="/blog/pics/11850278-b9f083a49c4ceae3.png" alt=""><br>出现博客主页，部署完成，可从外网访问你的博客了</p>
+<h5 id="使用个性域名"><a href="#使用个性域名" class="headerlink" title="使用个性域名"></a>使用个性域名</h5><p>首先，你需要有一个域名，可以到<a href="https://cn.aliyun.com" target="_blank" rel="noopener">阿里云</a>进行域名注册，具体操作就不演示了，我已经有了一个域名，下面演示如何通过个性域名访问到个人博客。<br>打开GitHub，打开博客的仓库，点击设置<img src="/blog/pics/11850278-21444fd7584e357d.png" alt="">)找到下面这一行<img src="/blog/pics/11850278-f5bb8fdfed48f9eb.png" alt="">输入你的域名后点击Save保存。</p>
+<p>设置域名解析，以阿里云为例，进入控制台，找到云解析DNS，点击要用作博客的域名<img src="/blog/pics/11850278-41cdc404e9b190e7.png" alt="">然后点击 添加解析<img src="/blog/pics/11850278-aa9f7629d632251e.png" alt=""> <img src="/blog/pics/11850278-8048d5f95e69e5cf.png" alt="">把红框内的修改为你的GitHub用户名，点击确认。</p>
+<p>打开MyBlog文件夹，打开其中的source文件夹，新建一个文本文档，重命名为<strong>CNAME（无后缀名）</strong><img src="/blog/pics/11850278-9f56222a068c8ca7.png" alt="">)然后用文本编辑器打开，输入你的域名，保存关闭即可<img src="/blog/pics/11850278-af342c9b75a0818e.png" alt="">至此，域名设置就完成了。在MyBlog文件夹下打开命令行，输入</p>
 <blockquote>
 <p>hexo generate<br>hexo deploy</p>
 </blockquote>

@@ -78,7 +78,7 @@ Kubectl 是用于控制 Kubernetes 的，可通过包管理程序安装(Mac 用 
 >  
 > $ kubectl get nodes
 
-![kubectl get pods](./../pics/1554018821347-c95d911f-88cb-4a73-b226-c425a84932e8.png)
+![kubectl get pods](/blog/pics/1554018821347-c95d911f-88cb-4a73-b226-c425a84932e8.png)
 
 可以看到， minikube 启动成功之后，用 `kubectl get nodes` 可以成功获取到 nodes 的信息，一切正常！
 
@@ -115,7 +115,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 用浏览器打开上面的网址可以看到
 
-![浏览器访问](./../pics/1554013868546-bc0e4859-0672-4173-9b5b-99326c52373d.png)
+![浏览器访问](/blog/pics/1554013868546-bc0e4859-0672-4173-9b5b-99326c52373d.png)
 
 成功输出了 Hello World
 
@@ -169,7 +169,7 @@ ps: scratch 是一个空的 Docker 镜像，即不使用基础镜像的意思
 > Successfully tagged hello:v1.0
 > $ docker images
 
-![docker images](./../pics/1554018896187-c9afeaca-2042-42c8-aaf0-7ad775eb1c33.png)
+![docker images](/blog/pics/1554018896187-c9afeaca-2042-42c8-aaf0-7ad775eb1c33.png)
 
 可以看到，成功地构建了镜像，笔者这里镜像大小仅仅只有 7.34MB
 
@@ -183,11 +183,11 @@ ps: scratch 是一个空的 Docker 镜像，即不使用基础镜像的意思
 > deployment.apps "hello" created
 > $ kubectl get deployments
 
-![kubectl get deployments](./../pics/1554018939941-8516aaf8-b734-40ba-9e1c-4e1d66699988.png)
+![kubectl get deployments](/blog/pics/1554018939941-8516aaf8-b734-40ba-9e1c-4e1d66699988.png)
 
 > $ kubectl get pods
 
-![kubectl get pods](./../pics/1554018967294-676d6ced-c2aa-4e43-8005-414c1e165a13.png)
+![kubectl get pods](/blog/pics/1554018967294-676d6ced-c2aa-4e43-8005-414c1e165a13.png)
 
 可以看到，Pods 已经准备好了
 
@@ -197,7 +197,7 @@ ps: scratch 是一个空的 Docker 镜像，即不使用基础镜像的意思
 > service "hello" exposed
 > $ kubectl get services
 
-![kubectl get services](./../pics/1554018998759-1009c3b7-d614-4b01-85fe-6a23fe758bdc.png)
+![kubectl get services](/blog/pics/1554018998759-1009c3b7-d614-4b01-85fe-6a23fe758bdc.png)
 
 可以看到，service 已经创建成功，执行以下命令来查看 service 的 ip 和端口
 
@@ -208,7 +208,7 @@ ps: ip和端口以自己执行命令后输出的为准
 > $ curl http://192.168.99.104:31537
 > Hello World
 
-![浏览器访问](./../pics/1554017653231-56204059-016c-485a-bd07-7c6d3e6ce782.png)
+![浏览器访问](/blog/pics/1554017653231-56204059-016c-485a-bd07-7c6d3e6ce782.png)
 
 使用浏览器打开，可以看到输出 Hello World，部署一切正常！
 

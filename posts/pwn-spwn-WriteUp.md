@@ -15,13 +15,13 @@ abbrlink: 10070
 
 checksec 一下
 
-![checksec](../pics/20191007000.png)
+![checksec](/blog/pics/20191007000.png)
 
 然后 IDA 静态分析一下
 
-![main](../pics/20191007001.png)
+![main](/blog/pics/20191007001.png)
 
-![vul_function](../pics/20191007002.png)
+![vul_function](/blog/pics/20191007002.png)
 
 可以看到，在 main 中调用了 vul_function, 而在 vul_function 中有两次读取，第一次读取 0x200 字节到 bss 段，第二次读取到 stack 中
 

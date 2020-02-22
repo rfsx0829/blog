@@ -66,7 +66,7 @@ main(void)
 
 但是这样其实只能实现无参数调用，如果加参数就会产生错误，像这样
 
-![image.png](./../pics/1554896522521-bd50a48e-0eef-43ad-9cb2-4a7d9f3744e2.png)
+![image.png](/blog/pics/1554896522521-bd50a48e-0eef-43ad-9cb2-4a7d9f3744e2.png)
 
 那么想办法来改进一下
 
@@ -148,6 +148,6 @@ main(void)
 
 看看改进后的效果，是否可以支持加参数了
 
-![image.png](./../pics/1554900459904-1e5d6fa6-5ef1-4357-a386-fa1920853ee4.png)
+![image.png](/blog/pics/1554900459904-1e5d6fa6-5ef1-4357-a386-fa1920853ee4.png)
 
 就可以支持参数了，很好嗷

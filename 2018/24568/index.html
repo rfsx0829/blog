@@ -206,21 +206,21 @@
 <p>有一个很好的办法，把这些常用的函数实现提取成单独的文件（动态链接库），放在某个地方，一个程序需要使用某个函数的时候再去加载对应的库，这样就能节省很多空间</p>
 <h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; main.c</span><br><span class="line">void hello();</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    hello();</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; hello.c</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">void hello()</span><br><span class="line">&#123;</span><br><span class="line">    printf(&quot;Hello World from hello.c\n&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>编译测试一下<br><code>gcc main.c hello.c -o main &amp;&amp; ./main</code><br><img src="/pics/11850278-e3e7e8477dccc727.png" alt="正常输出，没毛病"></p>
-<p>接下来将<code>hello.c</code>编译成动态链接库试一试<br><code>gcc hello.c -shared -o libhello.so</code><br><img src="/pics/11850278-9787cdc61297192a.png" alt=""></p>
+<p>编译测试一下<br><code>gcc main.c hello.c -o main &amp;&amp; ./main</code><br><img src="/blog/pics/11850278-e3e7e8477dccc727.png" alt="正常输出，没毛病"></p>
+<p>接下来将<code>hello.c</code>编译成动态链接库试一试<br><code>gcc hello.c -shared -o libhello.so</code><br><img src="/blog/pics/11850278-9787cdc61297192a.png" alt=""></p>
 <p>可以看到编译出了<code>libhello.so</code></p>
-<p>接下来编译<code>main.c</code>，并且制定使用<code>libhello</code>这个库，在当前目录查找库文件<br><code>gcc main.c -lhello -L. -o main</code><br><img src="/pics/11850278-7576b1c2f84901e8.png" alt=""></p>
+<p>接下来编译<code>main.c</code>，并且制定使用<code>libhello</code>这个库，在当前目录查找库文件<br><code>gcc main.c -lhello -L. -o main</code><br><img src="/blog/pics/11850278-7576b1c2f84901e8.png" alt=""></p>
 <p>运行一下试试</p>
-<p><img src="/pics/11850278-4cb2d8036b04454a.png" alt="没毛病"></p>
-<p>试试把<code>libhello.so</code>的名字改了，或者移动到其他地方，让<code>main</code>找不到动态库<br><img src="/pics/11850278-d6947296942c5c24.png" alt="可以看到，程序的确找不到库了，不能正常输出"></p>
+<p><img src="/blog/pics/11850278-4cb2d8036b04454a.png" alt="没毛病"></p>
+<p>试试把<code>libhello.so</code>的名字改了，或者移动到其他地方，让<code>main</code>找不到动态库<br><img src="/blog/pics/11850278-d6947296942c5c24.png" alt="可以看到，程序的确找不到库了，不能正常输出"></p>
 <p>可以很明确的看出，程序是在运行时动态加载<code>libhello.so</code>库的，如果这个库被移动或者改名了，程序就不能正常运行</p>
-<p>用ldd命令看看动态库的依赖<br><code>ldd ./main</code><br><img src="/pics/11850278-8d6fd46576008c86.png" alt="可以看到这个程序的几个动态依赖"></p>
+<p>用ldd命令看看动态库的依赖<br><code>ldd ./main</code><br><img src="/blog/pics/11850278-8d6fd46576008c86.png" alt="可以看到这个程序的几个动态依赖"></p>
 <h3 id="静态链接"><a href="#静态链接" class="headerlink" title="静态链接"></a>静态链接</h3><h4 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h4><p>静态链接就是直接把所有运行时需要的库，全部包含进程序中，打包在一起，这样就不管外面的库怎么移动怎么改名怎么缺少，程序都可以运行</p>
-<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><p>还是之前的代码，将<code>hello.c</code>编译，但是不作链接<br><code>gcc -c hello.c -o hello.o &amp;&amp; ll</code><br><img src="/pics/11850278-3a700992478f51b2.png" alt="生成的hello.o"></p>
-<p>再把<code>hello.o</code>打包成静态库文件<br><code>ar -r libhello.a hello.o &amp;&amp; ll</code><br><img src="/pics/11850278-c222fafabc2e7b24.png" alt="生成的静态库文件"></p>
-<p>再来编译<code>main.c</code>并且把<code>libhello.a</code>静态链接进程序中<br><code>gcc main.c -lhello -L. -static -o main_static</code><br><img src="/pics/11850278-8ea164963b49bdef.png" alt=""></p>
-<p>运行结果一切正常，并且跟静态库已经没有关系了，删掉静态库程序依然可以运行<br><img src="/pics/11850278-63b2d9f30852fc42.png" alt="可以看出差别在哪"></p>
-<p>用<code>ldd</code>命令看看<br><code>ldd ./main_static</code><br><img src="/pics/11850278-e79bedeb9b78513e.png" alt="哈，不是个动态可执行文件"></p>
+<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><p>还是之前的代码，将<code>hello.c</code>编译，但是不作链接<br><code>gcc -c hello.c -o hello.o &amp;&amp; ll</code><br><img src="/blog/pics/11850278-3a700992478f51b2.png" alt="生成的hello.o"></p>
+<p>再把<code>hello.o</code>打包成静态库文件<br><code>ar -r libhello.a hello.o &amp;&amp; ll</code><br><img src="/blog/pics/11850278-c222fafabc2e7b24.png" alt="生成的静态库文件"></p>
+<p>再来编译<code>main.c</code>并且把<code>libhello.a</code>静态链接进程序中<br><code>gcc main.c -lhello -L. -static -o main_static</code><br><img src="/blog/pics/11850278-8ea164963b49bdef.png" alt=""></p>
+<p>运行结果一切正常，并且跟静态库已经没有关系了，删掉静态库程序依然可以运行<br><img src="/blog/pics/11850278-63b2d9f30852fc42.png" alt="可以看出差别在哪"></p>
+<p>用<code>ldd</code>命令看看<br><code>ldd ./main_static</code><br><img src="/blog/pics/11850278-e79bedeb9b78513e.png" alt="哈，不是个动态可执行文件"></p>
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>没有小结，自己看书去！</p>
 
         </div>

@@ -234,33 +234,33 @@
 <h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>在执行 <code>docker build</code> 之前，先执行一句 <code>eval $(minikube docker-env)</code> 使 Docker client 连接到 Minikube 中的 Docker daemon 上，之后的操作就可以正常进行了</p>
 <h3 id="问题起源"><a href="#问题起源" class="headerlink" title="问题起源"></a>问题起源</h3><p>自己写了一个简单的 HelloWorld 服务，打算用 Kubernetes 部署，看到书上讲 Kubernetes 是可以直接使用Docker 镜像的，于是将服务构建成镜像，但没有推送到 Hub 上，打算就在本地供测试使用，万万没想到，出现了一些问题</p>
 <h3 id="具体"><a href="#具体" class="headerlink" title="具体"></a>具体</h3><p>构建镜像之后，执行 <code>docker images</code> 能看到镜像构建成功</p>
-<p><img src="/pics/1554035962870-74984556-e663-4c6f-bb3e-c5a2a0fde779.png" alt="docker images"></p>
+<p><img src="/blog/pics/1554035962870-74984556-e663-4c6f-bb3e-c5a2a0fde779.png" alt="docker images"></p>
 <p>但是在创建 Deployments 后启动 Pod 的时候出现了问题</p>
 <blockquote>
 <p>$ kubectl run hello-go –image=hello-go:v1.0 –port=8080<br>deployment.apps “hello-go” created<br>$ kubectl get pods</p>
 </blockquote>
-<p><img src="/pics/1554192581403-b6458b9b-69c1-4813-87f3-d177dc0b8816.png" alt="kubectl get pods"></p>
+<p><img src="/blog/pics/1554192581403-b6458b9b-69c1-4813-87f3-d177dc0b8816.png" alt="kubectl get pods"></p>
 <p>结果又出现了错误，实在搞不懂为什么明明本地有镜像 Minikube 却还要去拉取，禁用拉取之后又告诉不行，死活不使用本地的镜像，于是又开始查询，经过了很长时间的查询（可能书上有但我不仔细），才找到了解决方案和原因，<strong>原来 Minikube 自己维护了一个 Docker daemon，可以通过 <code>minikube ssh</code> 命令连接到 Minikube 的 shell ，再执行 <code>docker images</code> 查看 Minikube 内的 Docker 镜像</strong></p>
 <blockquote>
 <p>$ minikube ssh<br>$ docker images</p>
 </blockquote>
-<p><img src="/pics/1554194007240-2217cf6d-f9dd-44db-beed-b042d183cf7c.png" alt="docker images"></p>
+<p><img src="/blog/pics/1554194007240-2217cf6d-f9dd-44db-beed-b042d183cf7c.png" alt="docker images"></p>
 <p>可以看到，<strong>原来 Minikube 的本地真的没有 hello-go 镜像，这就很好的解释了为什么它会去拉取镜像，设置为永不拉取之后出现错误的问题了</strong></p>
 <p>知道问题因何而起，那解决起来就简单了</p>
 <p>注意到 Minikube 有一个子命令 docker-env</p>
-<p><img src="/pics/1554194287519-8c95d777-7d86-4934-a49c-88b711e2f30f.png" alt="minikube"></p>
+<p><img src="/blog/pics/1554194287519-8c95d777-7d86-4934-a49c-88b711e2f30f.png" alt="minikube"></p>
 <p>执行看看</p>
-<p><img src="/pics/1554194319879-5a4fbbac-1b3d-497f-92ab-f1708f364b98.png" alt="minikube docker-env"></p>
+<p><img src="/blog/pics/1554194319879-5a4fbbac-1b3d-497f-92ab-f1708f364b98.png" alt="minikube docker-env"></p>
 <p>给出了 Minikube 内部 Docker daemon 的地址和端口，提示执行 <code>eval $(minikube docker-env)</code> ，照着做就可以使你的 Docker client 直接操作 Minikube 中的 Docker daemon，于是再构建镜像就是保存在 Minikube 中了</p>
 <blockquote>
 <p>$ eval $(minikube docker-env)<br>$ cd ./projectDirectory     // 将工作目录切换到项目文件夹下<br>$ docker build -t hello-go:v1.0 .<br>$ docker images</p>
 </blockquote>
-<p><img src="/pics/1554194695441-a57f6a9d-0830-4820-875c-857511f19727.png" alt="docker images"></p>
+<p><img src="/blog/pics/1554194695441-a57f6a9d-0830-4820-875c-857511f19727.png" alt="docker images"></p>
 <p>这样，就成功构建了镜像并且镜像是保存在 Minikube 中的 Docker 中了，再用 kubectl 创建 deployments</p>
 <blockquote>
 <p>$ kubectl run hello-nice –image=hello-go:v1.0 –port=8080<br>deployment.apps “hello-nice” created<br>$ kubectl get pods</p>
 </blockquote>
-<p><img src="/pics/1554194859859-fd9c492f-d9d5-4d01-bb4a-3c8326bbb2c0.png#align=left&display=inline&height=137&name=image.png&originHeight=137&originWidth=675&size=27688&status=done&width=675" alt="kubectl get pods"></p>
+<p><img src="/blog/pics/1554194859859-fd9c492f-d9d5-4d01-bb4a-3c8326bbb2c0.png#align=left&display=inline&height=137&name=image.png&originHeight=137&originWidth=675&size=27688&status=done&width=675" alt="kubectl get pods"></p>
 <p>可以看到，不仅新建的 Pods 正常运行了，而且之前因为没有镜像而出错的 Pods 都正常了！</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>在尝试minikube的过程中笔者就只遇到了这些问题，很庆幸都解决掉了，那这篇文章就记录到这里。</p>
 <p>读者在Minikube使用过程中有什么问题都可以联系笔者噢，说不定可以帮点小忙:)</p>

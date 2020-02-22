@@ -202,10 +202,10 @@
 
         <div class="post-content">
             <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>拿到题目，就是一个简单的 RSA 题目，给出了 n 和密文 c</p>
-<p><img src="/pics/20191014001.png" alt="topic"></p>
+<p><img src="/blog/pics/20191014001.png" alt="topic"></p>
 <p>因为给出了 n 所以直接考虑能不能硬分解 n</p>
 <p>把 n 放到<a href="http://www.factordb.com/index.php" target="_blank" rel="noopener">大整数在线分解网站</a>上试试看，确实可以分解，得到 p 和 q</p>
-<p><img src="/pics/20191014002.png" alt="factor"></p>
+<p><img src="/blog/pics/20191014002.png" alt="factor"></p>
 <p>既然都分解出 p 和 q 了，那么算出明文就没有难度了</p>
 <p>顺便注意：大整数的高次幂可以用<strong>模重复平方算法</strong>来快速计算，自己实现也比较简单，但其实用 Python 自带的 pow 函数就够了</p>
 <p>ps：<strong>如果 RSA 没有给出公钥 e 的话，默认选择 e = 0x10001 即 65537</strong></p>

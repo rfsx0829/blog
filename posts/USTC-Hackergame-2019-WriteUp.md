@@ -22,17 +22,17 @@ ps: 没写 WriteUp 当然就是没做出来的题啦，可以在 Hackergame 官�
 
 这个也不难，打开网站后看到还剩两万多天，好可怕～
 
-![2077](../pics/20191021001.png)
+![2077](/blog/pics/20191021001.png)
 
 直接查看源代码，康康有什么猫腻，发现了一些东西哦
 
-![script](../pics/20191021002.png)
+![script](/blog/pics/20191021002.png)
 
 发现是取当前时间，然后发送到服务器，那简单了，直接把时间改到 2077 年
 
 或者还可以把代码复制下来，放到 Chrome 的控制台里，把第二行 `var now = new Date()` 改成 2077 年的时间再重新调用函数去请求文件，并且直接把请求到的内容打到 console，像这样
 
-![console](../pics/20191021003.png)
+![console](/blog/pics/20191021003.png)
 
 于是就成功拿到 flag 啦
 
@@ -42,11 +42,11 @@ ps: 没写 WriteUp 当然就是没做出来的题啦，可以在 Hackergame 官�
 
 看题目应该是 SSRF 的，题目页面还提供了源码下载
 
-![Web Helper](../pics/20191021004.png)
+![Web Helper](/blog/pics/20191021004.png)
 
 下载源码康康
 
-![source code](../pics/20191021005.png)
+![source code](/blog/pics/20191021005.png)
 
 发现对 url 的审查不是特别严格，于是尝试构造一个 url 来绕过
 
@@ -54,7 +54,7 @@ ps: 没写 WriteUp 当然就是没做出来的题啦，可以在 Hackergame 官�
 
 没有检查 # 号，而且是取 @ 后面的内容检查，那直接用 # 把后面注释掉，成功拿到 flag
 
-![flag](../pics/20191021006.png)
+![flag](/blog/pics/20191021006.png)
 
 > flag{UrL_1S_n0t_SO_easy}
 
@@ -66,13 +66,13 @@ ps: 没写 WriteUp 当然就是没做出来的题啦，可以在 Hackergame 官�
 
 题目描述涉及到 黑 和 白 两个字，肯定有猫腻，打开题目一康，果然有！
 
-![white cat](../pics/20191021007.png)
+![white cat](/blog/pics/20191021007.png)
 
 图片是白猫，但是猫猫说自己是白猫，那么秘密肯定在图片上啦
 
 把图片往深色的地方拖动一下，呀！
 
-![black cat](../pics/20191021008.png)
+![black cat](/blog/pics/20191021008.png)
 
 > flag{4_B14CK_C4T}
 
@@ -172,7 +172,7 @@ ps: 没写 WriteUp 当然就是没做出来的题啦，可以在 Hackergame 官�
 
 没什么难度，读取数据之后进行简单的处理，和栈中的值比较
 
-![decompile](../pics/20191022001.png)
+![decompile](/blog/pics/20191022001.png)
 
 直接取出栈中的值逆向一下，得到 flag
 

@@ -15,13 +15,13 @@ abbrlink: 10141
 
 拿到题目，就是一个简单的 RSA 题目，给出了 n 和密文 c
 
-![topic](../pics/20191014001.png)
+![topic](/blog/pics/20191014001.png)
 
 因为给出了 n 所以直接考虑能不能硬分解 n
 
 把 n 放到[大整数在线分解网站](http://www.factordb.com/index.php)上试试看，确实可以分解，得到 p 和 q
 
-![factor](../pics/20191014002.png)
+![factor](/blog/pics/20191014002.png)
 
 既然都分解出 p 和 q 了，那么算出明文就没有难度了
 

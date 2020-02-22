@@ -210,14 +210,14 @@
 <p><strong>在第15行，只给<code>p_new-&gt;data</code>赋值，没有给<code>p_new-&gt;next</code>赋值，<code>p_new-&gt;next</code>成为野指针，而在后面第26行等判断指针不为<code>NULL</code>的语句始终为真，导致无限循环</strong></p>
 <p><strong>所以修改方案就是在第15行后面添加一行<code>p_new-&gt;next = NULL;</code></strong></p>
 <p>这一点修改之后，做测试，发现始终都不会打印出链表最后一个值</p>
-<p><img src="/pics/11850278-59a7d66f39a64189.png" alt="可以看到2没有了"></p>
+<p><img src="/blog/pics/11850278-59a7d66f39a64189.png" alt="可以看到2没有了"></p>
 <p>这就让我思考，难道是链表操作有误？</p>
 <p>在经过一系列排查之后，再次找到问题所在</p>
 <p><strong>第13行输入判断条件有误，<code>getchar() != &#39;\n&#39;</code> ，前面的字符后都是空格<code>&#39; &#39;</code>，但最后一个数后面的字符是<code>&#39;\n&#39;</code>，于是表达式为假，于是就没有后面的循环了，最后一个数也自然没加进链表</strong></p>
 <p><strong>改进方法就是将循环改成下面这样</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">while(scanf(&quot;%d&quot;, &amp;temp)) &#123;</span><br><span class="line">    p_new &#x3D; (Node)malloc(sizeof(node));</span><br><span class="line">    p_new-&gt;data &#x3D; temp;</span><br><span class="line">    p_new-&gt;next &#x3D; NULL;</span><br><span class="line">    if(head &#x3D;&#x3D; NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        head &#x3D; p_new;</span><br><span class="line">        tail &#x3D; p_new;</span><br><span class="line">    &#125;</span><br><span class="line">    tail-&gt;next &#x3D; p_new;</span><br><span class="line">    tail &#x3D; p_new;</span><br><span class="line">    if(getchar() &#x3D;&#x3D; &#39;\n&#39;) &#123;</span><br><span class="line">        break;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>这样就不会有问题啦<br><img src="/pics/11850278-677c760628baf929.png" alt="一切正常"></p>
+<p>这样就不会有问题啦<br><img src="/blog/pics/11850278-677c760628baf929.png" alt="一切正常"></p>
 <p>所以这次问题小记就到这里啦</p>
 
         </div>

@@ -15,7 +15,7 @@ abbrlink: 5290
 
 在 Debug 模式下表现一切正常，但是当我编译为发布版时，网络访问不能正常工作，错误为 Dio Error: OS Error: Permission Denied.
 
-![Screenshot](./../pics/1559131545845-7b932922-efca-4015-b767-deceac464433.png)
+![Screenshot](/blog/pics/1559131545845-7b932922-efca-4015-b767-deceac464433.png)
 
 ## 原因
 

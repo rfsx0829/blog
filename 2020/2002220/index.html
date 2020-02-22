@@ -14,7 +14,7 @@
 
 
 
-<title>记一次单片机从零到一 | 0xbz7sb7</title>
+<title>最近的事请 | 0xbz7sb7</title>
 
 
 
@@ -110,73 +110,11 @@
             <div class="container">
     
     
-        <div class="post-toc">
-    <div class="tocbot-list">
-    </div>
-    <div class="tocbot-list-menu">
-        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
-        <a onclick="go_top()">Back to top</a>
-        <a onclick="go_bottom()">Go to bottom</a>
-    </div>
-</div>
-
-<script>
-    document.ready(
-        function () {
-            tocbot.init({
-                tocSelector: '.tocbot-list',
-                contentSelector: '.post-content',
-                headingSelector: 'h1, h2, h3, h4, h5',
-                collapseDepth: 1,
-                orderedList: false,
-                scrollSmooth: true,
-            })
-        }
-    )
-
-    function expand_toc() {
-        var b = document.querySelector(".tocbot-toc-expand");
-        tocbot.init({
-            tocSelector: '.tocbot-list',
-            contentSelector: '.post-content',
-            headingSelector: 'h1, h2, h3, h4, h5',
-            collapseDepth: 6,
-            orderedList: false,
-            scrollSmooth: true,
-        });
-        b.setAttribute("onclick", "collapse_toc()");
-        b.innerHTML = "Collapse all"
-    }
-
-    function collapse_toc() {
-        var b = document.querySelector(".tocbot-toc-expand");
-        tocbot.init({
-            tocSelector: '.tocbot-list',
-            contentSelector: '.post-content',
-            headingSelector: 'h1, h2, h3, h4, h5',
-            collapseDepth: 1,
-            orderedList: false,
-            scrollSmooth: true,
-        });
-        b.setAttribute("onclick", "expand_toc()");
-        b.innerHTML = "Expand all"
-    }
-
-    function go_top() {
-        window.scrollTo(0, 0);
-    }
-
-    function go_bottom() {
-        window.scrollTo(0, document.body.scrollHeight);
-    }
-
-</script>
-    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">记一次单片机从零到一</h1>
+            <h1 class="post-title">最近的事请</h1>
             
                 <div class="post-meta">
                     
@@ -185,14 +123,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">October 30, 2019&nbsp;&nbsp;20:58:59</a>
+                        Date: <a href="#">February 22, 2020&nbsp;&nbsp;20:39:59</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/blog/categories/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a>
+                                <a href="/blog/categories/Others/">Others</a>
                             
                         </span>
                     
@@ -201,30 +139,12 @@
         </header>
 
         <div class="post-content">
-            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>作为一个计算机的学生，似乎倒腾单片机不太算正路，不过是应老同学的要求，那硬着头皮也要上呀，即使没有任何经验。</p>
-<p>朋友让我帮忙做一个 超声波测距警报的小型电子设备，而且要在警报的时候通知周围的其他相同设备，一起报警</p>
-<p>于是对单片机没有任何经验的我，开始了一条神奇的摸索之路</p>
-<p>Ps：其实自己有稍微捣腾过树莓派，但是树莓派和单片机的差距还是有点大的，所以也可以算作是没有经验吧</p>
-<h2 id="资料收集"><a href="#资料收集" class="headerlink" title="资料收集"></a>资料收集</h2><p>因为有捣腾树莓派的微弱经验，知道要做出这些功能肯定需要很多传感器，于是去买了有</p>
-<ul>
-<li>超声波测距模块</li>
-<li>蓝牙模块</li>
-<li>有源蜂鸣器</li>
-<li>STM32F103C8T6 最小开发版</li>
-<li>USB to TTL 模块</li>
-</ul>
-<p>不知道为什么选择了 STM32 而不是大家都会的 51 单片机，可能是因为不想太容易完成吧（以至于后面有问题问同学的时候大家都只会 51 于是我自己的问题还得自己解决），不过现在来看的话，STM32 还是非常不错的，而且很便宜</p>
-<p>下载了很多资料，各个模块的开发手册，单片机的开发手册，CSDN 上找到了各种教程，于是准备开始动工</p>
-<h2 id="初步动手"><a href="#初步动手" class="headerlink" title="初步动手"></a>初步动手</h2><p>刚开始我还不知道 Keil 这个软件的，也不知道什么叫所谓的 “下载”，“串口” 之类的，也还没有买 STM32 单片机，因为我以为有自己的树莓派就够了，于是拿着一堆传感器往面包版上一接就开始敲代码，因为树莓派有成熟的 GPIO 库和图形化的操作系统，于是一下子就写出了基本的代码，实现了基本的测距和报警功能。</p>
-<p>这样虽然简单，但是我要怎么才能做出两个设备来呢，还要让其互相通信，这似乎是个问题。于是我选择了 STM32 单片机。</p>
-<p>单片机到手之后，我纯粹是懵逼状态，哦，就两个板子，两根线，怎么用啊？下载的什么所谓最小系统原理图，什么各种电路图看得头大，并且毫无头绪。</p>
-<p>又是各种查查查，知道可以通过 J-Link 方式烧录程序，但是这个 J-Link 似乎又要什么硬件设备来连接，看得我又是头大，到最后终于发现似乎可以通过 USB 来烧录，不过也需要购买一个连接设备，就是那个 USB to TTL 的东西。（到后来才知道这东西，不仅可以烧录程序，还可以调试蓝牙模块，真的是非常酷）</p>
-<p><img src="/blog/pics/20191030001.png" alt="就是这个东西"></p>
-<p>又从同学口中了解到可以用 Keil 这个软件来写程序，于是正途开始了</p>
-<h2 id="正式路途"><a href="#正式路途" class="headerlink" title="正式路途"></a>正式路途</h2><p>下载好 Keil 之后随意编译了一个 每 0.5 秒开关一次小灯的 example （编译的时候需要选择设备诶），然后烧录进单片机，哇，果然真的可以诶，不过刚开始烧录真的觉得好麻烦诶</p>
-<ol>
-<li></li>
-</ol>
+            <p>最近把域名换了一下，各种子域名也都配上了证书，完美支持https啦</p>
+<p>虽然个人主页备了案，但发现还是托管在Github上方便些，自己的服务器还是用来折腾比较好</p>
+<p>博客也托管在Github上，主页上的小游戏也托管在Github上，这可太方便了，随时提交就能看到效果</p>
+<p>前几天朋友找我一起去面试字跳，他倒是信心满满，可我不行。我连自己的简历都写不出来，有很多东西我觉得自己玩玩还行，真要往简历上写，还真的是牵强了些，所以我打算再多提升提升自己，反正还有一学期才大四呢，那时候再实习也不算很迟。</p>
+<p>我总是不擅长表达自己，总是闷闷的，一切都憋在心里。可朋友的一句话提醒了我，他讲：我只是希望我学的东西都能发挥用处，而不是放在那里吃灰。当然这是大体意思，原话我记不太清了。而且还有什么“如果一个人既懂创造又懂营销，那就所向披靡”这样的言论。所以我觉着，似乎得，多尝试表达一下自己了。因此我打算，主页上再多做几个板块，作为自己各种兴趣爱好的展示的地方。嗯，我觉得很可。</p>
+<p>淦，把博客域名换到子repo后，我的图片链接是死的，现在图片全挂了，还得写个脚本修复一下。</p>
 
         </div>
 
@@ -253,9 +173,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/blog/tags/STM32/"># STM32</a>
-                    
-                        <a href="/blog/tags/%E5%8D%95%E7%89%87%E6%9C%BA/"># 单片机</a>
+                        <a href="/blog/tags/%E6%9D%82%E8%B0%88/"># 杂谈</a>
                     
                         
                 </span>
@@ -268,10 +186,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/blog/2019/11041/">[WriteUp] HECTF WriteUp</a>
             
-            
-            <a class="next" rel="next" href="/blog/2019/20212/">USTC Hackergame 2019 WriteUp</a>
+            <a class="next" rel="next" href="/blog/2019/11041/">[WriteUp] HECTF WriteUp</a>
             
         </section>
 

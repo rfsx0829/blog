@@ -203,10 +203,10 @@
         <div class="post-content">
             <p>这个题来自于<a href="https://196011564.github.io/" target="_blank" rel="noopener">咲夜南梦</a>师傅</p>
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>checksec 一下</p>
-<p><img src="/pics/20191007000.png" alt="checksec"></p>
+<p><img src="/blog/pics/20191007000.png" alt="checksec"></p>
 <p>然后 IDA 静态分析一下</p>
-<p><img src="/pics/20191007001.png" alt="main"></p>
-<p><img src="/pics/20191007002.png" alt="vul_function"></p>
+<p><img src="/blog/pics/20191007001.png" alt="main"></p>
+<p><img src="/blog/pics/20191007002.png" alt="vul_function"></p>
 <p>可以看到，在 main 中调用了 vul_function, 而在 vul_function 中有两次读取，第一次读取 0x200 字节到 bss 段，第二次读取到 stack 中</p>
 <p>查看一下 stack 中 buf 相对于 ebp 的偏移为 0x18，而第二次读取的长度只有 0x20 所以只能覆盖到 ebp 和 ret addr，由于在栈处能够溢出的字节太少，不足以构造较长的 gadget，又看到第一次往 bss 读取时读取长度很充足，并且程序没有开启 PIE 保护，bss 段是知道地址的，于是考虑能否利用 bss 段实现攻击</p>
 <p>注意到在 <a href="https://ctf-wiki.github.io/ctf-wiki/pwn/linux/stackoverflow/fancy-rop-zh/#frame-faking" target="_blank" rel="noopener">CTF Wiki # frame faking</a> 讲到了一种叫做 Frame Faking 的方法，即伪造栈帧，就恰巧是用于溢出字节较少且有其他可控制内存区域的情形的。仔细看完介绍后，大概理解是怎么回事了，利用两次 leave, ret (<strong>函数正常返回一次，溢出控制返回地址指向 leave, ret 再一次</strong>) 实现栈帧伪造。</p>
