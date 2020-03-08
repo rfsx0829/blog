@@ -5,14 +5,14 @@ categories: Cloud
 tags:
   - Serverless
 abbrlink: 2003080
-cover: http://us.api.bugzeng.com/bingimg
+cover: https://us.api.bugzeng.com/bingimg
 ---
 
 前两天做了个获取必应每日图片的 API 部署到自己服务器上，虽然整个过程并不太麻烦，但还是觉得那么简单的一个东西还从开发到部署自己还要维护，非常麻烦。
 
 想想看它的功能也非常简单，先请求到图片的地址，再请求图片，就这么简单，假设排除掉我还自己每天把图片保存到服务器上这种奇怪需求，其实做成 Serverless 服务会方便很多。
 
-![放个每日的图片玩玩，每天都会变的噢](http://api.bugzeng.com/bingimg)
+![放个每日的图片玩玩，每天都会变的噢](https://api.bugzeng.com/bingimg)
 
 恰好阿里云有提供函数计算服务。而且可以按量付费，每月都有几万次的免费调用次数。这已经远远足够了吧。
 
@@ -20,7 +20,7 @@ cover: http://us.api.bugzeng.com/bingimg
 
 ![新加两行代码，直接完成](/blog/pics/20200308001.png)
 
-再配置个自定义域名，一个不需要自己维护的 Serverless API 就完成了。前面那张图片就是通过这个 API 获取的图片。如果想要自己体验，可以访问 [api.bugzeng.com/bingimg](http://api.bugzeng.com/bingimg)
+再配置个自定义域名，一个不需要自己维护的 Serverless API 就完成了。前面那张图片就是通过这个 API 获取的图片。如果想要自己体验，可以访问 [api.bugzeng.com/bingimg](https://api.bugzeng.com/bingimg)
 
 不得不说 Serverless 真的太方便啦。
 
