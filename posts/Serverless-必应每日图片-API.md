@@ -5,7 +5,7 @@ categories: Cloud
 tags:
   - Serverless
 abbrlink: 2003080
-cover: https://us.api.bugzeng.com/bingimg
+cover: http://us.api.bugzeng.com/bingimg
 ---
 
 前两天做了个获取必应每日图片的 API 部署到自己服务器上，虽然整个过程并不太麻烦，但还是觉得那么简单的一个东西还从开发到部署自己还要维护，非常麻烦。
