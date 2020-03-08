@@ -5,13 +5,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Golang 程序在 Docker 容器中对外发送 https 请求的一个问题及解决方案 - 0xbz7sb7</title>
+    <title>Serverless 必应每日图片 API - 0xbz7sb7</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="0xbz7sb7, blog, bugzeng,"> 
-    <meta name="description" content="最近没事，打算把博客的背景图片弄成像必应一样，每天都是很好看的图。简单查了一下，有一些别人开发的公开的 API 可以使用，直接获取必应的每日图片，但我还是打算自己写一个，于是又开始了折腾。
-具体代码,"> 
+    <meta name="description" content="前两天做了个获取必应每日图片的 API 部署到自己服务器上，虽然整个过程并不太麻烦，但还是觉得那么简单的一个东西还从开发到部署自己还要维护，非常麻烦。
+想想看它的功能也非常简单，先请求到图片的地址，,"> 
     <meta name="author" content="0xbz7sb7"> 
     <link rel="alternative" href="atom.xml" title="0xbz7sb7" type="application/atom+xml"> 
     <link rel="icon" href="/blog/img/favicon.png"> 
@@ -41,7 +41,7 @@
     <div class="bar" style="width: 0;"></div>
     <a class="icon-home image-icon" href="javascript:;" data-url="https://im.bugzeng.com/blog"></a>
     <div title="播放/暂停" class="icon-play"></div>
-    <h3 class="subtitle">Golang 程序在 Docker 容器中对外发送 https 请求的一个问题及解决方案</h3>
+    <h3 class="subtitle">Serverless 必应每日图片 API</h3>
     <div class="social">
         <!--<div class="like-icon">-->
             <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
@@ -59,38 +59,24 @@
     <div class="section">
         <div class="article">
     <div class='main'>
-        <h1 class="title">Golang 程序在 Docker 容器中对外发送 https 请求的一个问题及解决方案</h1>
+        <h1 class="title">Serverless 必应每日图片 API</h1>
         <div class="stuff">
-            <span>三月 06, 2020</span>
+            <span>三月 08, 2020</span>
             
-  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/blog/tags/Docker/" rel="tag">Docker</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/blog/tags/Golang/" rel="tag">Golang</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/blog/tags/https/" rel="tag">https</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/blog/tags/openssl/" rel="tag">openssl</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/blog/tags/%E5%B0%8F%E9%97%AE%E9%A2%98/" rel="tag">小问题</a></li></ul>
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/blog/tags/Serverless/" rel="tag">Serverless</a></li></ul>
 
 
         </div>
         <div class="content markdown">
-            <p>最近没事，打算把博客的背景图片弄成像<a href="https://cn.bing.com" target="_blank" rel="noopener">必应</a>一样，每天都是很好看的图。简单查了一下，有一些别人开发的公开的 API 可以使用，直接获取必应的每日图片，但我还是打算自己写一个，于是又开始了折腾。</p>
-<p>具体代码可以在 <a href="https://github.com/rfsx0829/little-tools/tree/master/bingImg" target="_blank" rel="noopener">little-tools/bingImg</a> 仓库找到。内容也都很简单。到这里都没有遇到什么问题。</p>
-<p>在把程序部署到服务器的时候，我更喜欢静态编译 Golang 程序，然后做成 Docker 的镜像，这样会方便一些。但是有些时日没碰 Go，以前敲得挺熟悉的命令居然忘记了，现在就把这个记在博客里，免得以后再忘记还到处去找。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ CGO_ENABLED=0 GOOS=linux go build -ldflags <span class="string">'-extldflags "-static"'</span></span><br></pre></td></tr></table></figure>
-
-<p>然后把程序上传到服务器，写一个简单的 Dockerfile，build 成镜像，然后启动一个容器。</p>
-<p>然后问题出现了，容器能正常启动，但是下载不到图片。查看日志</p>
-<p><img src="/blog/pics/20200306001.png" alt=""></p>
-<p>Google 了好久终于找到了解决方案，这里记录一下。</p>
-<p>如果 Docker 容器是从 scratch 这个空镜像构建的，并且访问 https 的站就会有上述的问题，解决方案就是把需要访问的网站的 CA 证书复制到容器的 /etc/ssl/certs/ 这个目录下。</p>
-<p>所以在 Dockerfile 里多加一行</p>
-<blockquote>
-<p>…<br>ADD ./bing.com.crt /etc/ssl/certs/<br>…</p>
-</blockquote>
-<p>然后重新 build 镜像，再启动容器就可以了。</p>
-<p>还有个问题，要怎么去取得一个网站的 CA 证书呢？可以直接用 Chrome 访问，然后点地址栏的那个锁，导出证书就可以啦。</p>
-<p>或者也有命令行方式，在这里给出</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ timeout 5 openssl s_client -connect cn.bing.com:443 &gt; bing.com.crt</span><br><span class="line">$ <span class="comment"># cn.bing.com 替换要获取证书的网站噢 bing.com.crt 换成其他文件名都可</span></span><br></pre></td></tr></table></figure>
-
-<p>这样就可以把必应的证书保存到 bing.com.crt 文件中啦。</p>
-<p>所以现在这个简单的小服务也可以对外提供服务了。如果有需要的话，可以直接使用。</p>
-<p><a href="https://dev.bugzeng.com/api/v1/bingimg" target="_blank" rel="noopener">自制必应每日图片API</a></p>
-<p>不过目前只有 1920*1080 分辨率的，未来获取会扩展，逃)</p>
+            <p>前两天做了个获取必应每日图片的 API 部署到自己服务器上，虽然整个过程并不太麻烦，但还是觉得那么简单的一个东西还从开发到部署自己还要维护，非常麻烦。</p>
+<p>想想看它的功能也非常简单，先请求到图片的地址，再请求图片，就这么简单，假设排除掉我还自己每天把图片保存到服务器上这种奇怪需求，其实做成 Serverless 服务会方便很多。</p>
+<p><img src="http://api.bugzeng.com/bingimg" alt="放个每日的图片玩玩，每天都会变的噢"></p>
+<p>恰好阿里云有提供函数计算服务。而且可以按量付费，每月都有几万次的免费调用次数。这已经远远足够了吧。</p>
+<p>于是我去阿里云开通了函数计算服务，创建了一个函数，为了简单，直接选择 Python 环境，短短几行代码。功能就和之前自己开发的 API 功能一样了。</p>
+<p><img src="/blog/pics/20200308001.png" alt="新加两行代码，直接完成"></p>
+<p>再配置个自定义域名，一个不需要自己维护的 Serverless API 就完成了。前面那张图片就是通过这个 API 获取的图片。如果想要自己体验，可以访问 <a href="http://api.bugzeng.com/bingimg" target="_blank" rel="noopener">api.bugzeng.com/bingimg</a></p>
+<p>不得不说 Serverless 真的太方便啦。</p>
+<p>（不过刚开始不知道为啥，新手引导的时候我的地区在美国硅谷，导致做出来的 API 获取图片非常慢，挂了梯子之后速度才显著提升。而且获取到的图片不一样，我还一直不知道为啥。后来发现获取的图片就是必应点国际版的背景图片，才猜测是地区问题，把地区改到国内之后就很棒了，访问非常快，获取的图片也是国内版的背景图片。不过这也并不是坏事，之前都没想到分国内和国际版，现在两个 API 都有了。国际版 <a href="http://us.api.bugzeng.com/bingimg" target="_blank" rel="noopener">us.api.bugzeng.com</a></p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
