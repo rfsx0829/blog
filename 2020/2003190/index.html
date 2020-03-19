@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>大图片隐写小图片 - 0xbz7sb7</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="0xbz7sb7, blog, bugzeng,"> 
+    <meta name="description" content="大图片隐写小图片实现注：如果出现 KB，MB 这种单位，都是指 1 MB = 1024 KB, 1 KB = 1024 Byte, 1 Byte = 8 bit
+分析一张图片由许多像素点组成，常见的,"> 
+    <meta name="author" content="0xbz7sb7"> 
+    <link rel="alternative" href="atom.xml" title="0xbz7sb7" type="application/atom+xml"> 
+    <link rel="icon" href="/blog/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+<link rel="stylesheet" href="/blog/css/diaspora.css">
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">0xbz7sb7</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="https://im.bugzeng.com/blog"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">大图片隐写小图片</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">大图片隐写小图片</h1>
+        <div class="stuff">
+            <span>三月 19, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/blog/tags/Python/" rel="tag">Python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/blog/tags/%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F/" rel="tag">信息隐藏</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/blog/tags/%E9%9A%90%E5%86%99/" rel="tag">隐写</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="大图片隐写小图片实现"><a href="#大图片隐写小图片实现" class="headerlink" title="大图片隐写小图片实现"></a>大图片隐写小图片实现</h1><p>注：如果出现 KB，MB 这种单位，都是指 1 MB = 1024 KB, 1 KB = 1024 Byte, 1 Byte = 8 bit</p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>一张图片由许多像素点组成，常见的矩形图像，长和宽的乘积确定了图像的像素点个数，每个像素点有一个颜色，表示颜色又有很多方案，以常见的 rgb 方案为例，则一张 512×512 的图片应有 512×512×3 字节（未压缩）的数据用于存放颜色。如果是灰度图，则只有 512×512×1 字节（未压缩）用于存放颜色。</p>
+<p>rgb 的三位，因为范围在 0-255，所以每位只需一个字节（8bit）来存放。而已知一张图片，如果将其每个像素点的 rgb 三个字节每个字节最后 1 bit 置 0，用肉眼是看不出和原图的区别的（最后 1 bit 置 0 最多使原值减少 1,故差别不大<del>，50%不变，50%减小1</del>）。经过实际测试，每字节最后 2 bit 置 0 也看不出区别（因为最多减少 3）。有了这个前置条件，就意味着每个像素点都可以抽出 3 bit 的空间（6 bit 也可以<del>，够狠的话 9 bit 也可以，图像只比原图暗了一点点，但推荐还是 8 bit，凑个整</del>）用于隐藏其他信息。</p>
+<h3 id="不同掩码效果测试"><a href="#不同掩码效果测试" class="headerlink" title="不同掩码效果测试"></a>不同掩码效果测试</h3><ol>
+<li>原图<img src="/blog/pics/1584418501039-2a404d04-2062-46a4-a4cb-acfd503f7faf.png" alt="lenna.png"></li>
+<li>0xFE<img src="/blog/pics/1584418605916-c62e7cd7-e9fd-41d2-afc5-beaf317e2fc6.png" alt="0xFE.png"></li>
+<li>0xFC<img src="/blog/pics/1584418616505-21fd8db1-61e6-4c7a-8e1f-7a7873fd1d1d.png" alt="0xFC.png"></li>
+<li>0xF8<img src="/blog/pics/1584418638759-6cdf3161-8f09-4c64-96dc-a75d0584a4b1.png" alt="0xF8.png"></li>
+<li>0xF0<img src="/blog/pics/1584418657041-d6fb5c54-e0de-4957-8bac-f80c1cff70c9.png" alt="0xF0.png"></li>
+<li>0xE0<img src="/blog/pics/1584418687223-3f5adf66-5552-4793-b5af-d9f501e6af78.png" alt="0xE0.png"></li>
+<li>0xC0<img src="/blog/pics/1584418694122-011c55b8-5473-4249-91c9-78aad32010a9.png" alt="0xC0.png"><h3 id="隐藏二进制流"><a href="#隐藏二进制流" class="headerlink" title="隐藏二进制流"></a>隐藏二进制流</h3>这就没有任何要求，只要有空间，往里放就行。每个像素点隐藏 3 bit，则一张 512×512 的图片可以隐藏 512×512×3 bit 即 96 KB 的二进制信息。<h3 id="隐藏黑白（只有纯黑纯白的那种）图片"><a href="#隐藏黑白（只有纯黑纯白的那种）图片" class="headerlink" title="隐藏黑白（只有纯黑纯白的那种）图片"></a>隐藏黑白（只有纯黑纯白的那种）图片</h3>每个像素点只需要 1bit 位来隐藏，所以一张彩色图片只需要在 rgb 三位里挑一种颜色的最后一 bit 置零用于隐藏信息，就可以隐藏和载体一样尺寸的黑白图片了。（这有啥用？当然有用，比如二维码）<h3 id="隐藏灰度图片"><a href="#隐藏灰度图片" class="headerlink" title="隐藏灰度图片"></a>隐藏灰度图片</h3>因为灰度图片每个像素点只用一个字节来存放颜色深浅程度，故一张 512×512 的灰度图只需要隐藏 512×512×1×8 bit 的信息，而一张 512×512 的图片只有 512×512×3 bit 的空间用于隐藏其他信息（<del>当然如果按前面说的每像素点 rgb 三位共抽出 8bit，这样就可以刚好隐藏一张相同尺寸的灰度图</del>）。（<del>灰图并不是我讨论的重点，自己玩去</del>）<h3 id="隐藏-rgb-图片"><a href="#隐藏-rgb-图片" class="headerlink" title="隐藏 rgb 图片"></a>隐藏 rgb 图片</h3>对于一张 512×512 的 rgb 图片，需要 512×512×3×8 bit 的空间才能隐藏。即 768 KB。<strong>但实际观察发现，一张 512×512 的图片并没有 768 KB，因为经过了压缩。所以其实把一张图片当作二进制流来隐藏，效率是比隐藏原始颜色数据要高的（应该是这样，我单方面觉得）（当然如果颜色足够杂乱，压缩的效率大幅降低，这时当作二进制流可能会比存原始颜色数据要大）</strong>。</li>
+</ol>
+<p>按原始颜色隐藏</p>
+<ul>
+<li>如果载体图片<strong>每个像素点只取 1bit *<em>用于隐藏私密信息，而私密图片每个像素点有 3×8 bit 的信息需要被隐藏，所以需要载体的尺寸（指长宽乘积，即像素点个数）需要是私密图片尺寸（同上）的 *</em>24 倍</strong>。</li>
+<li>如果载体图片<strong>每个像素点取 3 bit **用于隐藏私密信息，即每字节隐藏 1bit，所以</strong>隐藏效率是 1/8<strong>，需要载体尺寸是私密图片的</strong> 8 倍**。</li>
+<li>如果载体图片<strong>每个像素点取 6 bit **用于隐藏信息，即每字节隐藏 2 bit，所以</strong>隐藏效率是 1/4**，需要载体尺寸是私密图片的 4 倍。而恰好 4 是可以开平方的，长宽乘 2 就可以。（所以我的实现应该会采用这种方式）</li>
+</ul>
+<p>按二进制流隐藏，当压缩效率还行的时候，比如经典的 Lenna 图片，我下载了 512×512 尺寸的彩色图（提供一下 SHA256，以明确到底说的是哪张图片，SHA256: 7e497501a28bcf9a353ccadf6eb9216bf098ac32888fb542fb9bfe71d486761f），大小是 473831 Byte，即 3790648 bit。</p>
+<ul>
+<li>如果载体图片每个像素点取 1 bit 用于隐藏，而且假设载体宽 512 px，则 3790648 / 512 = 7403.6，所以载体长度需要至少 7404 px</li>
+<li>如果载体图片每个像素点取 3 bit，则需要 2467.8 即 2468 px</li>
+<li>如果载体图片每个像素点取 6 bit，则需要 1233.9 即 1234 px，隐藏效率（按尺寸来算）大概是 41.5%，即相同宽度只能隐藏长度为载体长度 41.5% 的图片。<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3>所以我在作业里说可以通过编码来提高隐藏效率（这里的编码当然是指压缩），最终实现隐藏同样尺寸甚至更大尺寸（稍微大一点）似乎是实现不了的？<del>并不，我还有招</del>。<h3 id="脑洞拓展（并不脑洞，完全可行）"><a href="#脑洞拓展（并不脑洞，完全可行）" class="headerlink" title="脑洞拓展（并不脑洞，完全可行）"></a>脑洞拓展（并不脑洞，完全可行）</h3>既然载体图可以每字节抽 2bit 出来用于隐藏私密信息，并且用肉眼看不出微小的差别。那么隐藏的私密图片，难道就不能有略微损耗吗？如果我私密图片每一字节，也只要前 6 bit，最后 2 bit 我不要了，这样和原图的差别用肉眼也很难看出，但是隐藏效率会提升很多，不妨计算一下。（<strong>当然这种情况只适用于压缩效率不高的图片，压缩效率高直接作为二进制就很高效了，而二进制数据是不能有差错的，不然无法解码</strong>）</li>
+</ul>
+<p>每 8 bit 只隐藏 6 bit，这样就减少了 25% 的负担。</p>
+<p>好吧，确实载体需要比私密私密图片大（指像素尺寸）。毕竟有信息论摆在那，我搁这找啥没趣呢。如果需要载体和私密图片相同尺寸，<strong>折中的方案是载体的 8 bit 只取前 4 bit，后 4 bit 用于隐藏信息，而私密图片的 8 bit 也只取前 4 bit存放在载体的后 4 bit，私密图片的后 4 bit 抛弃</strong>。这样的话图片质量非常差，参见掩码 0xF0。这种方案就可以使载体尺寸和隐藏图片的尺寸相同，且符合信息论规律。</p>
+<h2 id="具体实现（Python3-版本，Matlab-请饶步）"><a href="#具体实现（Python3-版本，Matlab-请饶步）" class="headerlink" title="具体实现（Python3 版本，Matlab 请饶步）"></a>具体实现（Python3 版本，Matlab 请饶步）</h2><h3 id="依赖库及安装"><a href="#依赖库及安装" class="headerlink" title="依赖库及安装"></a>依赖库及安装</h3><ul>
+<li>opencv2</li>
+</ul>
+<p><code>pip3 install opencv-python</code></p>
+<ul>
+<li>numpy</li>
+</ul>
+<p><code>pip3 install numpy</code></p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">errors = [ <span class="string">"everything is ok"</span>, <span class="string">"carrier image too small"</span>, <span class="string">"size is just right, don't be so coincident next time"</span> ]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">enc</span><span class="params">(carrier_path, secret_path, output_path)</span>:</span></span><br><span class="line">    carrier = cv2.imread(carrier_path)</span><br><span class="line">    carrier_height, carrier_width = carrier.shape[:<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">    secret = cv2.imread(secret_path)</span><br><span class="line">    secret_height, secret_width = secret.shape[:<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">    secret_pixel_num = secret_height * secret_width</span><br><span class="line"></span><br><span class="line">    <span class="comment"># check</span></span><br><span class="line">    <span class="keyword">if</span> carrier_height * carrier_width &lt; <span class="number">4</span> * secret_pixel_num:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># # pre</span></span><br><span class="line">    <span class="comment"># for i in range(carrier_height):</span></span><br><span class="line">    <span class="comment">#     for j in range(carrier_width):</span></span><br><span class="line">    <span class="comment">#         for k in range(3):</span></span><br><span class="line">    <span class="comment">#             carrier[i, j, k] &amp;= 0xFC</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># process</span></span><br><span class="line">    offsets = [ <span class="number">6</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">0</span> ]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(carrier_height):</span><br><span class="line">        print(<span class="string">"%2.1f%% process"</span> % (i*<span class="number">100</span> / carrier_height), end=<span class="string">"\r"</span>)</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(carrier_width):</span><br><span class="line">            linear_index = i * carrier_width + j</span><br><span class="line">            quotient, remainder = linear_index // secret_pixel_num, linear_index % secret_pixel_num</span><br><span class="line">            <span class="keyword">if</span> quotient &gt;= <span class="number">4</span>:</span><br><span class="line">                cv2.imwrite(output_path, carrier)</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">            secret_i, secret_j = remainder // secret_width, remainder % secret_width</span><br><span class="line">            <span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">                carrier[i, j, k] &amp;= <span class="number">0xFC</span></span><br><span class="line">                carrier[i, j, k] ^= <span class="number">0x03</span> &amp; (secret[secret_i, secret_j, k] &gt;&gt; offsets[quotient])</span><br><span class="line">    cv2.imwrite(output_path, carrier)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dec</span><span class="params">(carrier_path, output_path)</span>:</span></span><br><span class="line">    carrier = cv2.imread(carrier_path)</span><br><span class="line">    carrier_height, carrier_width = carrier.shape[:<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># <span class="doctag">TODO:</span> support more, like read from mixed file</span></span><br><span class="line">    secret_height, secret_width = <span class="number">512</span>, <span class="number">512</span></span><br><span class="line">    secret_pixel_num = secret_height * secret_width</span><br><span class="line">    secret = np.zeros((secret_height, secret_width, <span class="number">3</span>), np.uint8)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># check</span></span><br><span class="line">    <span class="keyword">if</span> carrier_height * carrier_width &lt; <span class="number">4</span> * secret_pixel_num:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># # pre</span></span><br><span class="line">    <span class="comment"># for i in range(carrier_height):</span></span><br><span class="line">    <span class="comment">#     for j in range(carrier_width):</span></span><br><span class="line">    <span class="comment">#         for k in range(3):</span></span><br><span class="line">    <span class="comment">#             carrier[i, j, k] &amp;= 0xFC</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># process</span></span><br><span class="line">    offsets = [ <span class="number">6</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">0</span> ]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(carrier_height):</span><br><span class="line">        print(<span class="string">"%2.1f%% process"</span> % (i*<span class="number">100</span> / carrier_height), end=<span class="string">"\r"</span>)</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(carrier_width):</span><br><span class="line">            linear_index = i * carrier_width + j</span><br><span class="line">            quotient, remainder = linear_index // secret_pixel_num, linear_index % secret_pixel_num</span><br><span class="line">            <span class="keyword">if</span> quotient &gt;= <span class="number">4</span>:</span><br><span class="line">                cv2.imwrite(output_path, secret)</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">            secret_i, secret_j = remainder // secret_width, remainder % secret_width</span><br><span class="line">            <span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">                secret[secret_i, secret_j, k] ^= (carrier[i, j, k] &amp; <span class="number">0x03</span>) &lt;&lt; offsets[quotient]</span><br><span class="line">    cv2.imwrite(output_path, secret)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    exit_code = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> len(sys.argv) == <span class="number">3</span>:</span><br><span class="line">        exit_code = dec(sys.argv[<span class="number">1</span>], sys.argv[<span class="number">2</span>])</span><br><span class="line">    <span class="keyword">elif</span> len(sys.argv) == <span class="number">4</span>:</span><br><span class="line">        exit_code = enc(sys.argv[<span class="number">1</span>], sys.argv[<span class="number">2</span>], sys.argv[<span class="number">3</span>])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">"[Usage]:"</span>)</span><br><span class="line">        print(<span class="string">"    Encrypt:"</span>, sys.argv[<span class="number">0</span>], <span class="string">"[carrier] [secret] [output]"</span>)</span><br><span class="line">        print(<span class="string">"    Decrypt:"</span>, sys.argv[<span class="number">0</span>], <span class="string">"[carrier] [output]"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> exit_code != <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">"[Error]:"</span>, errors[exit_code])</span><br></pre></td></tr></table></figure>
+<h3 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h3><ol>
+<li>载体图片<img src="/blog/pics/1584434328061-d2033bd4-45a7-4398-9812-c92bf8548fbe.png" alt="carrier.png"></li>
+<li>需隐藏的图片：标准 Lenna 图</li>
+<li>mixed.png<img src="/blog/pics/1584434447678-6e4c3815-a537-4aa4-b137-c656bcbb8807.png" alt="mixed.png"></li>
+<li>解出 out.png<img src="/blog/pics/1584434701290-77a5dbab-327b-42e9-8b18-58dd3bd727a0.png" alt="out.png"><h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3></li>
+</ol>
+<ul>
+<li>本来觉得取 2bit 应该不会有问题，实现了才发现其实是看得出来的，mixed.png 这张仔细看左上角可以看出 Lena 的影子。但这个问题是可以解决的，因为我在算法实现时，按顺序去隐藏的，所以这样在左上角可以看到原图的影子。如果换个其他的顺序就可以解决。</li>
+<li>解出原图的时候，是手动指定秘密图片尺寸的，这一点需要改进。应该在存的时候就把图片尺寸也编码进去，而不是在解的时候指定。</li>
+</ul>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/5146554.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/qq/001faIUs4M2zna.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+        data-ae='false'
+        data-ci='b461fe440fe09abd038f'
+        data-cs='ce376c31953bb9faa0febf2771e673baf191f2a3'
+        data-r='blog'
+        data-o='rfsx0829'
+        data-a='rfsx0829'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/blog/js/plugin.js"></script>
+<script src="/blog/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/blog/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/blog/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/blog/photoswipe/photoswipe.min.js"></script>
+<script src="/blog/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
