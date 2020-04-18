@@ -5,12 +5,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tag: Serverless - 0xbz7sb7</title>
+    <title>Golang 源码阅读 - 0xbz7sb7</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="0xbz7sb7, blog, bugzeng,"> 
-    
+    <meta name="description" content="最近没有更新博客，因为在读 Golang 的源码。
+以前觉得不重要的，现在觉得以前是傻逼。挺好的。
+阅读笔记在语雀。
+当然可以在博客右上角点进我的语雀主页，也可以直接从下面的快捷链接直接跳转到知识库,"> 
     <meta name="author" content="0xbz7sb7"> 
     <link rel="alternative" href="atom.xml" title="0xbz7sb7" type="application/atom+xml"> 
     <link rel="icon" href="/blog/img/favicon.png"> 
@@ -35,79 +38,82 @@
 <body class="loading">
     <span id="config-title" style="display:none">0xbz7sb7</span>
     <div id="loader"></div>
-    <div class="nav">
-    <ul id="menu-menu" class="menu">
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/blog/about/" title="Whoami" target="_blank" rel="noopener">Whoami</a>
-        </li>
-        
-        <li class="  menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="https://github.com/rfsx0829" title="Github" target="_blank" rel="noopener">Github</a>
-        </li>
-        
-        <li class="  menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="https://www.yuque.com/zeng1999" title="Yuque" target="_blank" rel="noopener">Yuque</a>
-        </li>
-        
-        <li class="  menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="https://www.zhihu.com/people/ni-mo-xian-sheng-40" title="Zhihu" target="_blank" rel="noopener">Zhihu</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/blog/categories/" title="Categories" target="_blank" rel="noopener">Categories</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/blog/tags/" title="Tags" target="_blank" rel="noopener">Tags</a>
-        </li>
-        
-    </ul>
-    <p id="copyright">
-        &copy; 2020 0xbz7sb7.
-        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
-        Theme <a href="https://github.com/Fechin/hexo-theme-diaspora" title="Diaspora" target="_blank" rel="noopener">Diaspora</a>
-        by Fechin
-    </p>
-</div>
-
-<div id="container">
-    
-<div id="screen">
-    <div id="mark">
-        <div class="layer" data-depth="0.4">
-            <img src="https://dev.bugzeng.com/api/v1/bingimg" id="cover" crossorigin="anonymous" width="1920" height="1080">
-        </div>
-    </div>
-    <div id="vibrant">
-        <svg viewBox="0 0 2880 1620" height="100%" preserveAspectRatio="xMaxYMax slice">
-            <polygon opacity="0.7" points="2000,1620 0,1620 0,0 600,0 "/>
-        </svg>
-        <div></div>
-    </div>
-    <div id="header">
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="https://im.bugzeng.com/blog"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">Golang 源码阅读</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
         <div>
-            <a class="image-logo" href="/"></a>
-            <div class="icon-menu switchmenu"></div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
         </div>
     </div>
-    
-    <div id="post0">
-        <p>三月 08, 2020</p>
-        <h2><a href="/blog/2020/3080/" title="Serverless 必应每日图片 API" class="posttitle">Serverless 必应每日图片 API</a></h2>
-        <p class="summary">前两天做了个获取必应每日图片的 API 部署到自己服务器上，虽然整个过程并不太麻烦，但还是觉得那么简单的一个东西还...</p>
-    </div>
-    
+    <div class="scrollbar"></div>
 </div>
 
-    <div id="primary">
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Golang 源码阅读</h1>
+        <div class="stuff">
+            <span>四月 18, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/blog/tags/Golang/" rel="tag">Golang</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/blog/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" rel="tag">源码阅读</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>最近没有更新博客，因为在读 Golang 的源码。</p>
+<p>以前觉得不重要的，现在觉得以前是傻逼。挺好的。</p>
+<p>阅读笔记在语雀。</p>
+<p>当然可以在博客右上角点进我的语雀主页，也可以直接从下面的快捷链接直接跳转到知识库。</p>
+<p><a href="https://www.yuque.com/zeng1999/zagw0q" target="_blank" rel="noopener">点击这里一起学习 Golang 源码</a></p>
+<p>顺便一说，我发现这个博客主题，每篇文章的封面图片是真的难搞啊，我又没有图床。还是抽时间写个工具一键上传生成图片链接，这样就不用每篇博客都是他妈的大雄恶搞静香了。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/5146554.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/qq/001faIUs4M2zna.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
         
+    <div id='gitalk-container' class="comment link"
+        data-ae='false'
+        data-ci='b461fe440fe09abd038f'
+        data-cs='ce376c31953bb9faa0febf2771e673baf191f2a3'
+        data-r='blog'
+        data-o='rfsx0829'
+        data-a='rfsx0829'
+        data-d='false'
+    >查看评论</div>
+
+
     </div>
     
 </div>
-<div id="preview"></div>
 
 
+    </div>
+</div>
 </body>
 
 <script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
